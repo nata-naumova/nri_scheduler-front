@@ -1,19 +1,19 @@
 :root {
-	--sx-color-primary: #0891b2;
-	--sx-color-primary-container: #a2e2f1;
+  --sx-color-primary: #0891b2;
+  --sx-color-primary-container: #a2e2f1;
 }
 
 .sx__event {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 /* (93px) - header height
  	(24px) - header mb
  */
 .calendar-page {
-	height: calc(100vh - (93px + 24px));
+  height: calc(100vh - (93px + 24px));
 }
 
 .sx-preact-calendar-wrapper {
-	height: 100%;
+  height: 100%;
 }
