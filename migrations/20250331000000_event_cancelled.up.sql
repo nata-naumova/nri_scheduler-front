@@ -1,2 +1,0 @@
-ALTER TABLE "events"
-ADD COLUMN "cancelled" BOOL NOT NULL DEFAULT false;

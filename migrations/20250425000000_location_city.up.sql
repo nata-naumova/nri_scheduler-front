@@ -1,6 +1,0 @@
-ALTER TABLE "locations"
-ADD COLUMN "city" VARCHAR(32) DEFAULT NULL,
-ADD CONSTRAINT fk_locations_cities
-	FOREIGN KEY (city)
-	REFERENCES cities(name)
-	ON DELETE NO ACTION;

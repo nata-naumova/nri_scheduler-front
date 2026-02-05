@@ -1,3 +1,0 @@
-ALTER TABLE "users"
-DROP COLUMN "tg_id",
-ALTER COLUMN "pw_hash" SET NOT NULL;

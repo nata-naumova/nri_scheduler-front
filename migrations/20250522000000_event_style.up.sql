@@ -1,2 +1,0 @@
-ALTER TABLE "companies"
-ADD COLUMN "event_style" VARCHAR(27) DEFAULT NULL;
