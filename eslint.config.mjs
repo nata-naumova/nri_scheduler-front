@@ -1,81 +1,39 @@
-import globals from "globals";
-import prettier from 'eslint-plugin-prettier';
-import prettierRecommended from 'eslint-plugin-prettier/recommended';
-import pluginJs from "@eslint/js";
-import importSort from "eslint-plugin-simple-import-sort";
-import nodeImport from 'eslint-plugin-node-import';
-import typescriptParser from '@typescript-eslint/parser';
-import tsPlugin from'@typescript-eslint/eslint-plugin';
-import react from "eslint-plugin-react";
+import { defineConfig } from 'eslint-define-config';
 
-
-/** @type {import('eslint').Linter.Config[]} */
-export default [
-  {files: ["**/*.{ts,tsx}"]},
-  {
-    languageOptions: {
-      globals: globals.browser,
-      parser: typescriptParser,
-      parserOptions: {
-        project: ['./tsconfig.json'],
-      },
+export default defineConfig({
+  root: true,
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true
     }
   },
-  pluginJs.configs.recommended,
-  prettierRecommended,
-  react.configs.flat.recommended,
-  {
-    plugins: {
-      "simple-import-sort": importSort,
-      'node-import': nodeImport,
-      '@typescript-eslint': tsPlugin,
-      react,
-      prettier,
-    },
-    settings: {
-      react: {
-        version: "18.3.1"
-      }
-    },
-    rules: {
-      ...tsPlugin.configs.recommended.rules,
-      "prefer-const": "error",
-      "no-console": ["error", { allow: ["info", "warn", "error"] }],
-      "curly": ["error", "all"],
-      "eqeqeq": ["error", "always"],
-      "no-duplicate-imports": "error",
-      "node-import/prefer-node-protocol": "error",
-      "simple-import-sort/imports": ["error", {
-        groups: [
-          // Стили
-          ["^.+\\.s?css$"],
-          ["^node:"],
-          ["^preact", "^react"],
-          // Библиотеки начинающиеся на @, Библиотеки НЕ начинающиеся на @
-          ["^@", "^[^@.]"],
-          // Относительные пути
-          ["^\\./\\w+", "^\\.\\./\\w+", "^\\.\\./\\.\\./\\w+", "^\\.\\./\\.\\./\\.\\./\\w+", "^\\.\\./\\.\\./\\.\\./\\.\\./\\w+", "^\\.\\./\\.\\./\\.\\./\\.\\./\\.\\./\\w+"],
-        ],
-      }],
-      "simple-import-sort/exports": "error",
-      "no-shadow": "off",
-      "@typescript-eslint/no-shadow": "error",
-      "react/react-in-jsx-scope": "off",
-    },
+  env: {
+    browser: true,
+    es2021: true,
+    node: true
   },
-  {
-    ignores: [
-      "eslint.config.mjs",
-      ".cargo",
-      ".cargo-husky",
-      ".git",
-      ".vscode",
-      "migrations",
-      "node_modules",
-      "postgres",
-      "server",
-      "static",
-      "target",
-    ]
+  plugins: ['react', '@typescript-eslint', 'prettier', 'simple-import-sort'],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended'
+  ],
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
+  rules: {
+    'prettier/prettier': ['error'],
+    'react/react-in-jsx-scope': 'off', // React 17+ не требует импорта React
+    'react/prop-types': 'off',         // TS заменяет PropTypes
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error'
   }
-];
+});
