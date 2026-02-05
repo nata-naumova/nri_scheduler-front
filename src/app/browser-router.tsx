@@ -1,19 +1,23 @@
 import { Route, Routes } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 
-import { HomePage } from '@/pages/home';
-import { CompanyPage, EventPage, LocationPage, NotFoundPage, SignInPage } from '@/components/pages';
-
-import { Layout } from './layout';
 import { PublicOnlyLayout } from './public-only-layout';
 import { ProtectedLayout } from './protected-layout';
+import { Layout } from './layout';
 
-const SingUpPage = lazy(() => import('@/components/pages/sign-up/signup'));
-const CalendarPage = lazy(() => import('@/components/pages/calendar/calendar'));
-const ProfilePage = lazy(() => import('@/components/pages/profile/profile'));
-const ShortProfilePage = lazy(() => import('@/components/pages/profile/short-profile'));
-const ProfileEdit = lazy(() => import('@/components/pages/profile/profile-edit'));
-const VerificationPage = lazy(() => import('@/components/pages/verification/verification'));
+import { EventPage } from '@/pages/event/event';
+import { CompanyPage } from '@/pages/company/company';
+import { SignInPage } from '@/pages/sign-in/sing-in';
+import { LocationPage } from '@/pages/location/location';
+import { NotFoundPage } from '@/pages/not-found/not-found';
+import { HomePage } from '@/pages/home';
+
+const SingUpPage = lazy(() => import('@/pages/sign-up/signup'));
+const CalendarPage = lazy(() => import('@/pages/calendar/calendar'));
+const ProfilePage = lazy(() => import('@/pages/profile/profile'));
+const ShortProfilePage = lazy(() => import('@/pages/profile/short-profile'));
+const ProfileEdit = lazy(() => import('@/pages/profile/profile-edit'));
+const VerificationPage = lazy(() => import('@/pages/verification/verification'));
 // const RegionsPage = lazy(() => import('@/components/pages/regions/regions'));
 
 function AppRouter() {
