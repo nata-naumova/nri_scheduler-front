@@ -26,13 +26,14 @@ import {
   DrawerRoot,
   DrawerTitle,
   DrawerTrigger,
-} from '../../ui/drawer';
-import { Field } from '../../ui/field';
-import { addCompany, IApiCompany } from '../../../api';
-import { $profile } from '../../../store/profile';
-import { DEFAULT_EVENT_STYLE, IEventStyle, stringifyEventStyle } from '../../../utils';
+} from '@/shared/ui/drawer';
+
 import { useEffect, useState } from 'react';
 import { useStore } from '@nanostores/react';
+import { addCompany, IApiCompany } from '@/shared/api';
+import { DEFAULT_EVENT_STYLE, IEventStyle, stringifyEventStyle } from '@/shared/utils';
+import { $profile } from '@/app/store/profile';
+import { Field } from '@/shared/ui/field';
 
 export interface ICompanyProps {
   readonly data: ReadonlyArray<IApiCompany>;

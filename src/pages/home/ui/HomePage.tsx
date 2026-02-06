@@ -9,8 +9,7 @@ export function HomePage() {
 
   return (
     <section>
-      <h1>Добро пожаловать в НРИ Календарь</h1>
-      {/* <Container>
+      <Container>
         <Heading>Добро пожаловать в НРИ Календарь</Heading>
         <Text>
           Мы создали этот сервис, чтобы упростить вашу жизнь. Начните использовать все его
@@ -19,7 +18,7 @@ export function HomePage() {
         <Link href="/calendar" mt={4}>
           <Button type="button">Календарь</Button>
         </Link>
-      </Container> */}
+      </Container>
     </section>
   );
 }

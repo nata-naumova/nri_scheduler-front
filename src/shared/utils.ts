@@ -1,20 +1,19 @@
 import type { CalendarType } from '@schedule-x/calendar';
 
-import { $profile, IStoreProfile, TStoreProfile } from './store/profile';
 import { useStore } from '@nanostores/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { $profile, IStoreProfile, TStoreProfile } from '@/app/store/profile';
 
 export const navBack = () => history.back();
 
 export const EVENT_FORMAT = 'YYYY-MM-DD HH:mm';
 export const YYYY_MM_DD = 'YYYY-MM-DD';
 
-const navigate = useNavigate();
 
 /**
  * Универсальный хук для проверки состояния и редиректа
- */
+*/
 const useAuthCheck = (
   checkFn: (profile: TStoreProfile | null) => boolean,
   redirectPath: string,
@@ -22,6 +21,7 @@ const useAuthCheck = (
   const profile = useStore($profile);
   const [isLoading, setIsLoading] = useState(true);
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = $profile.listen((p) => {

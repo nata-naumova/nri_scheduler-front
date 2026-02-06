@@ -9,8 +9,9 @@ import { Button, Container, Heading, HStack, Input, Link, Stack, Text } from '@c
 import { Field } from '../../shared/ui/field';
 import { PasswordInput } from '../../shared/ui/password-input';
 import { toaster } from '../../shared/ui/toaster';
-import { getMyProfile, signIn, signInTg, TG_BOT_ID } from '../../api';
+
 import { ITelegramUser } from '../../shared/typings/telegram';
+import { getMyProfile, signIn, signInTg, TG_BOT_ID } from '@/shared/api';
 
 interface IFormSignin {
   readonly email: string;
@@ -39,7 +40,7 @@ export const SignInPage = () => {
         if (res !== null) {
           reset();
           toaster.success({ title: 'Успешная авторизация' });
-          navigate('/calendar');
+          // navigate('/calendar');
         } else {
           setFetching(false);
         }
@@ -62,7 +63,7 @@ export const SignInPage = () => {
         if (res !== null) {
           reset();
           toaster.success({ title: 'Успешная авторизация' });
-          navigate('/calendar');
+          // navigate('/calendar');
         } else {
           setFetching(false);
         }

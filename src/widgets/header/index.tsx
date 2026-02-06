@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { Box, Button, Container, Flex, HStack, Link, Stack, Text } from '@chakra-ui/react';
+import {  Box, Button, Container, Flex, HStack, Link, Stack, Text } from '@chakra-ui/react';
 
-import { Avatar } from './avatar';
-import { Popover } from './popover';
-import { logout } from '../../api';
-import { $avatarLink } from '../../app/store/profile';
-import { useAuthVerification } from '../../utils';
+import { useStore } from '@nanostores/react';
+import { useAuthVerification } from '@/shared/utils';
+import { $avatarLink } from '@/app/store/profile';
+import { logout } from '@/shared/api';
+import { Popover } from '@/shared/ui/popover';
+import { Avatar } from '@/shared/ui/avatar';
 
 export const Header = () => {
-  const path = '/';
+  const path = '/' as string;
   const [open, setOpen] = useState(false);
   const { profile, isAuthenticated, isVerified } = useAuthVerification();
 

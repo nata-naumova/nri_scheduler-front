@@ -1,8 +1,7 @@
 import type { UUID } from 'node:crypto';
-
-import { toaster } from './shared/ui/toaster';
-import { enter, leave, setFromTgAuthorization } from './store/profile';
-import { ITelegramUser } from './typings/telegram';
+import { toaster } from '../ui/toaster';
+import { enter, leave, setFromTgAuthorization } from '@/app/store/profile';
+import { ITelegramUser } from '../typings/telegram';
 
 export const API_HOST = import.meta.env.PROD
   ? ''
@@ -131,7 +130,7 @@ const checkResponse = async <T>(
         leave();
         if (!isSoft) {
           toaster.error({ title: apiRes.result });
-          navigate('/signin');
+          // navigate('/signin');
         }
 
         break;

@@ -25,37 +25,18 @@ import {
 import dayjs from 'dayjs';
 
 import { NotFoundPage } from '../not-found/not-found';
-import { CloseButton } from '../../ui/close-button';
-import {
-  DrawerBackdrop,
-  DrawerBody,
-  DrawerCloseTrigger,
-  DrawerContent,
-  DrawerHeader,
-  DrawerRoot,
-  DrawerTitle,
-  DrawerTrigger,
-} from '../../ui/drawer';
-import { Field } from '../../ui/field';
-import { HoverCard } from '../../ui/hover-card';
-import { Warning } from '../../ui/icons';
-import { toaster } from '../../ui/toaster';
-import {
-  applyEvent,
-  cancelEvent,
-  EScenarioStatus,
-  IApiEvent,
-  IApiLocation,
-  readEvent,
-  readLocations,
-  reopenEvent,
-  updateEvent,
-} from '../../../api';
-import { $profile, $tz } from '../../../store/profile';
-import { calcMapIconLink, EVENT_FORMAT, navBack, YYYY_MM_DD } from '../../../utils';
 import { useStore } from '@nanostores/react';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { applyEvent, cancelEvent, EScenarioStatus, IApiEvent, IApiLocation, readEvent, readLocations, reopenEvent, updateEvent } from '@/shared/api';
+import { $profile, $tz } from '@/app/store/profile';
+import { toaster } from '@/shared/ui/toaster';
+import { calcMapIconLink, EVENT_FORMAT, navBack, YYYY_MM_DD } from '@/shared/utils';
+import { HoverCard } from '@/shared/ui/hover-card';
+import { Warning } from '@/shared/ui/icons';
+import { CloseButton } from '@/shared/ui/close-button';
+import { DrawerBackdrop, DrawerBody, DrawerCloseTrigger, DrawerContent, DrawerHeader, DrawerRoot, DrawerTitle, DrawerTrigger } from '@/shared/ui/drawer';
+import { Field } from '@/shared/ui/field';
 
 const EventCard = ({
   event,
@@ -305,7 +286,7 @@ interface IFormEditEvent {
 
 export const EventPage = () => {
   const route = useNavigate();
-  const eventId = 1;
+  const eventId = undefined;
   const [fetching, setFetching] = useState(false);
   const [event, setEvent] = useState<IApiEvent | null>(null);
   const [open, setOpen] = useState(false);

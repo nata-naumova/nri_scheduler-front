@@ -1,7 +1,6 @@
 import '@schedule-x/theme-default/dist/index.css';
 import '../calendar/calendar.css';
 
-import type { UUID } from 'node:crypto';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -21,8 +20,6 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 
-import { PreviewCompany } from '../calendar/company';
-import { NotFoundPage } from '../not-found/not-found';
 import {
   DrawerBackdrop,
   DrawerBody,
@@ -32,19 +29,16 @@ import {
   DrawerRoot,
   DrawerTitle,
   DrawerTrigger,
-} from '../../shared/ui/drawer';
-import { Field } from '../../shared/ui/field';
-import { IApiCompany, IApiCompanyInfo, readCompanyById, updateCompany } from '../../api';
-import {
-  convertEventStyleToCSS,
-  DEFAULT_EVENT_STYLE,
-  IEventStyle,
-  navBack,
-  parseEventStyle,
-  stringifyEventStyle,
-} from '../../utils';
+} from '@/shared/ui/drawer';
+import { Field } from '@/shared/ui/field';
+
+
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { IApiCompany, IApiCompanyInfo, readCompanyById, updateCompany } from '@/shared/api';
+import { convertEventStyleToCSS, DEFAULT_EVENT_STYLE, IEventStyle, navBack, parseEventStyle, stringifyEventStyle } from '@/shared/utils';
+import { PreviewCompany } from '../calendar/company';
+import { NotFoundPage } from '../not-found/not-found';
 
 interface CompanyFormValues extends IApiCompany {
   style: IEventStyle;
