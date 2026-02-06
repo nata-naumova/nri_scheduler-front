@@ -1,29 +1,37 @@
-import '@schedule-x/theme-default/dist/index.css';
-import './calendar.css';
-
+import { lazy, Suspense, useEffect, useState } from 'react';
 import type { UUID } from 'node:crypto';
 
 import { Box, Container, Flex, HStack, Skeleton, Switch } from '@chakra-ui/react';
 
+import { useCalendarApp, ScheduleXCalendar } from '@schedule-x/react'
 import {
   CalendarApp,
   CalendarEventExternal,
   CalendarType,
   createViewMonthGrid,
 } from '@schedule-x/calendar';
-import { ScheduleXCalendar, useCalendarApp } from '@schedule-x/preact';
 import { CalendarAppSingleton } from '@schedule-x/shared';
-import dayjs from 'dayjs';
+import { createEventsServicePlugin } from '@schedule-x/events-service';
 
-import { HoverCard } from '../../ui/hover-card';
-import { Warning } from '../../ui/icons';
-import { IApiCompany, readEvent, readEventsList } from '../../../api';
-import { $mastery, disableMastery, enableMastery } from '../../../store/mastery';
-import { $profile, $tz } from '../../../store/profile';
-import { convertEventStyleToCalendarType, escapeCalendarId, EVENT_FORMAT } from '../../../utils';
-import { lazy, Suspense, useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 import { useStore } from '@nanostores/react';
 import { useNavigate } from 'react-router-dom';
+import { IApiCompany, readEvent, readEventsList } from '@/shared/api';
+import { $profile, $tz } from '@/app/store/profile';
+import { $mastery, disableMastery, enableMastery } from '@/app/store/mastery';
+import { convertEventStyleToCalendarType, escapeCalendarId, EVENT_FORMAT } from '@/shared/utils';
+import { HoverCard } from '@/shared/ui/hover-card';
+import { Warning } from '@/shared/ui/icons';
+import { usePageMeta } from '@/shared/lib/usePageMeta';
+
+import '@schedule-x/theme-default/dist/index.css';
+import './calendar.css';
 
 const Company = lazy(() => import('./company'));
 const Location = lazy(() => import('./location'));
@@ -32,81 +40,126 @@ const skeleton = <Skeleton alignSelf="100%" w="30%" />;
 
 const DEFAULT_EVENT_DURATION = 4;
 
+
 export const CalendarPage = () => {
   const [showSwitch, setShowSwitch] = useState(false);
   const [openDraw, setOpenDraw] = useState(false);
   const [companyList, setCompanyList] = useState<ReadonlyArray<IApiCompany>>([]);
-
+  
   const tz = useStore($tz);
   const mastery = useStore($mastery);
   const profile = useStore($profile);
   const navigate = useNavigate();
+  
+  usePageMeta({title:"Календарь", description:""});
 
-  const addDataEventToCalendar = (dateStart: string, dateEnd: string, calendar: CalendarApp) => {
-    const dateStartWithTz = dayjs.tz(dateStart, EVENT_FORMAT, tz).format();
-    const dateEndWithTz = dayjs.tz(dateEnd, EVENT_FORMAT, tz).format();
-    readEventsList(dateStartWithTz, dateEndWithTz, {
-      imamaster: $mastery.get(),
-    }).then((res) => {
-      if (res !== null) {
-        const calendars: Record<string, CalendarType> = {};
-
-        const events = res.payload.map((apiEv) => {
-          const start = dayjs(apiEv.date).tz(tz);
-          let end = start.add(apiEv.plan_duration || DEFAULT_EVENT_DURATION, 'h');
-
-          if (!end.isSame(start, 'day')) {
-            end = start.endOf('day');
-          }
-
-          const event: CalendarEventExternal = {
-            id: apiEv.id,
-            title: apiEv.company,
-            start: start.format(EVENT_FORMAT),
-            end: end.format(EVENT_FORMAT),
-          };
-
-          const style = apiEv.style;
-          if (style) {
-            const calendarId = escapeCalendarId(style);
-            calendars[calendarId] = convertEventStyleToCalendarType(style);
-            event.calendarId = calendarId;
-          }
-
-          return event;
-        });
-
-        const app = calendar['$app'] as CalendarAppSingleton;
-        app.config.calendars.value = calendars;
-        app.config.theme = 'master';
-
-        calendar.events.set(events);
-      }
-    });
-  };
+  const eventsService = useState(()=>createEventsServicePlugin())[0]; 
 
   const calendar = useCalendarApp({
     locale: 'ru-RU',
     views: [createViewMonthGrid()],
+    events: [],
+    plugins: [eventsService],
     callbacks: {
       onEventClick(event) {
         navigate(`/event/${event.id}`);
       },
       onRangeUpdate(range) {
-        addDataEventToCalendar(range.start, range.end, calendar);
+        addDataEventToCalendar(range.start, range.end);
       },
     },
   });
 
+  const convertDateToString = (dateInput: any): string => {
+    try {
+      if (dateInput && typeof dateInput === 'object') {
+        if (typeof dateInput.toString === 'function') {
+          return dateInput.toString();
+        }
+        if (typeof dateInput.toISOString === 'function') {
+          return dateInput.toISOString();
+        }
+      }
+      return String(dateInput);
+    } catch (error) {
+      console.error('Error converting date to string:', error);
+      return new Date().toISOString();
+    }
+  };
+
+ const addDataEventToCalendar = (dateStart: string, dateEnd: string) => {
+    if(!calendar) return;
+
+    try {
+      const startString = convertDateToString(dateStart);
+      const endString = convertDateToString(dateEnd);
+
+      const startDate = dayjs(startString);
+      const endDate = dayjs(endString);
+
+      const dateStartWithTz = startDate.tz(tz).format();
+      const dateEndWithTz = endDate.tz(tz).format();
+
+
+      readEventsList(dateStartWithTz, dateEndWithTz, {
+        imamaster: $mastery.get(),
+      }).then((res) => {
+        if (res !== null) {
+          const calendars: Record<string, CalendarType> = {};
+  
+          const events = res.payload.map((apiEv) => {
+            const start = dayjs(apiEv.date).tz(tz);
+            let end = start.add(apiEv.plan_duration || DEFAULT_EVENT_DURATION, 'h');
+  
+            if (!end.isSame(start, 'day')) {
+              end = start.endOf('day');
+            }
+  
+            const event: CalendarEventExternal = {
+              id: apiEv.id,
+              title: apiEv.company,
+              start: start.format(EVENT_FORMAT),
+              end: end.format(EVENT_FORMAT),
+            };
+  
+            const style = apiEv.style;
+            if (style) {
+              const calendarId = escapeCalendarId(style);
+              calendars[calendarId] = convertEventStyleToCalendarType(style);
+              event.calendarId = calendarId;
+            }
+  
+            return event;
+          });
+  
+          const app = calendar['$app'] as CalendarAppSingleton;
+          app.config.calendars.value = calendars;
+          app.config.theme = 'master';
+  
+          calendar.events.set(events);
+        }
+      });
+
+    } catch(error) {
+      console.log("Error in addDataEventToCalendar")
+    }
+
+  };
+
+  
   useEffect(() => {
+    if(!calendar) return;
+    
     const app = calendar['$app'] as CalendarAppSingleton;
     const range = app.calendarState.range.value;
     if (range !== null) {
-      addDataEventToCalendar(range.start, range.end, calendar);
+      addDataEventToCalendar(range.start, range.end);
     }
-  }, [mastery]);
+  }, [mastery, calendar]);
 
   const getNewEvent = (id: UUID) => {
+    if(!calendar) return;
+
     readEvent(id).then((responce) => {
       if (responce?.payload) {
         const data = responce.payload;
@@ -143,6 +196,16 @@ export const CalendarPage = () => {
       setOpenDraw(false);
     };
   }, [profile?.signed]);
+
+  if(!calendar) {
+    return (
+      <section>
+        <Container>
+          <div>Загрузка календаря...</div>
+        </Container>
+      </section>
+    )
+  }
 
   return (
     <section className={'calendar-page'}>
