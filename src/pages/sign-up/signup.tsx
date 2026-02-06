@@ -1,16 +1,17 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+
 import { FaTelegramPlane as TelegramIcon } from 'react-icons/fa';
 import { MdOutlineAlternateEmail as EmailIcon } from 'react-icons/md';
 
 import { Button, Container, Heading, Input, Link, Stack, Text } from '@chakra-ui/react';
+import { getMyProfile, registration, signInTg, TG_BOT_ID } from '@/shared/api';
+import { toaster } from '@/shared/ui/toaster';
+import { ITelegramUser } from '@/shared/typings/telegram';
+import { Field } from '@/shared/ui/field';
+import { PasswordInput } from '@/shared/ui/password-input';
 
-import { Field } from '../../shared/ui/field';
-import { PasswordInput } from '../../shared/ui/password-input';
-import { toaster } from '../../shared/ui/toaster';
-import { getMyProfile, registration, signInTg, TG_BOT_ID } from '../../api';
-import { ITelegramUser } from '../../shared/typings/telegram';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 interface IFormValues {
   readonly name: string;
@@ -39,7 +40,7 @@ export const SingUpPage = () => {
         toaster.success({
           title: 'Вам отправлено письмо для подтверждения email',
         });
-        navigate('/signin', true);
+        navigate('/sign-in');
       } else {
         setFetching(false);
       }
@@ -102,7 +103,7 @@ export const SingUpPage = () => {
           >
             <PasswordInput
               placeholder="******"
-              autocomplete="off"
+              autoComplete="off"
               {...register('password', {
                 required: 'Заполните поле',
               })}
@@ -115,7 +116,7 @@ export const SingUpPage = () => {
           >
             <PasswordInput
               placeholder="******"
-              autocomplete="off"
+              autoComplete="off"
               {...register('repassword', {
                 required: 'Заполните поле',
                 validate: (value) => getValues('password') === value || 'Пароли не совпадают',
@@ -139,7 +140,7 @@ export const SingUpPage = () => {
           </Button>
           <Text mx="auto" fontSize="sm">
             Уже зарегистрированы?{' '}
-            <Link variant="underline" href="/signin" colorPalette="teal">
+            <Link variant="underline" href="/sign-in" colorPalette="teal">
               Авторизация
             </Link>
           </Text>

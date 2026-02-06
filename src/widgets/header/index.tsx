@@ -7,13 +7,26 @@ import { $avatarLink } from '@/app/store/profile';
 import { logout } from '@/shared/api';
 import { Popover } from '@/shared/ui/popover';
 import { Avatar } from '@/shared/ui/avatar';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const Header = () => {
-  const path = '/' as string;
+  const location = useLocation();
+  const path = location.pathname;
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
   const { profile, isAuthenticated, isVerified } = useAuthVerification();
-
   const avatarLink = useStore($avatarLink);
+
+  const handleLogout = () => {
+    logout();
+    setOpen(false);
+    navigate('/sign-in')
+  }
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  }
 
   return (
     <header>
@@ -23,38 +36,31 @@ export const Header = () => {
             <Link variant="plain" href="/calendar" fontWeight={600} fontSize={24} minHeight="44px">
               НРИ Календарь
             </Link>
-            {isAuthenticated ? (
+            {!isAuthenticated ? (
               <Popover
                 open={open}
                 onOpenChange={(e) => setOpen(e.open)}
                 positioning={{ placement: 'bottom-end' }}
                 content={
                   <Stack>
-                    <Link href="/profile" onClick={() => setOpen(false)}>
+                    <Button variant="ghost" onClick={() => handleNavigation('/profile')}>
                       Профиль
-                    </Link>
-                    <Link
-                      href={isVerified ? '/regions' : ''}
-                      onClick={(e) => {
-                        if (!isVerified) {
-                          e.preventDefault();
-                        }
-                        setOpen(false);
-                      }}
+                    </Button>
+                    <Button
+                    variant="ghost"
+                      onClick={() => isVerified && handleNavigation('/regions')}
+                      disabled={!isVerified}
                       cursor={isVerified ? 'pointer' : 'not-allowed'}
                     >
                       {isVerified ? 'Регионы и города' : 'Регионы и города (подтвердите эл. почту)'}
-                    </Link>
-                    <Link
-                      href="/signin"
+                    </Button>
+                    <Button
+                    variant="ghost"
                       colorPalette="red"
-                      onClick={() => {
-                        logout();
-                        setOpen(false);
-                      }}
+                      onClick={handleLogout}
                     >
                       Выйти
-                    </Link>
+                    </Button>
                   </Stack>
                 }
               >
@@ -69,13 +75,12 @@ export const Header = () => {
                 </HStack>
               </Popover>
             ) : (
-              path !== '/signin' &&
-              path !== '/signup' && (
-                <Link href="/signin" ml="auto">
-                  <Button type="button" h="44px">
+              path !== '/sign-in' &&
+              path !== '/sign-up' && (
+                
+                  <Button type="button" h="44px" ml="auto" onClick={() => navigate('/sign-in')}>
                     Вход и регистрация
                   </Button>
-                </Link>
               )
             )}
           </Flex>

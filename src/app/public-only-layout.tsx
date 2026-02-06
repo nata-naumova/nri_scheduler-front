@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 export function PublicOnlyLayout() {
   //   const { isAuthorized } = useAuth()
-  const isAuthorized = true;
+  const isAuthorized = false;
 
   if (isAuthorized) {
     return <Navigate to="/" replace />;

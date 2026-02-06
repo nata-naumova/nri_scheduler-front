@@ -12,7 +12,7 @@ import { LocationPage } from '@/pages/location/location';
 import { NotFoundPage } from '@/pages/not-found/not-found';
 import { HomePage } from '@/pages/home';
 
-// const SingUpPage = lazy(() => import('@/pages/sign-up/signup'));
+const SingUpPage = lazy(() => import('@/pages/sign-up/signup'));
 const CalendarPage = lazy(() => import('@/pages/calendar/calendar'));
 // const ProfilePage = lazy(() => import('@/pages/profile/profile'));
 // const ShortProfilePage = lazy(() => import('@/pages/profile/short-profile'));
@@ -29,8 +29,8 @@ function AppRouter() {
           <Route path="/calendar" element={<CalendarPage />} />
 
           <Route element={<PublicOnlyLayout />}>
-            <Route path="/signin" element={<SignInPage />} />
-            {/* <Route path="/signup" element={<SingUpPage />} /> */}
+            <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/sign-up" element={<SingUpPage />} />
           </Route>
 
           <Route element={<ProtectedLayout />}>

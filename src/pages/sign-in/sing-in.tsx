@@ -106,7 +106,7 @@ export const SignInPage = () => {
               >
                 <Input
                   placeholder="me@example.ru"
-                  autocomplete="email"
+                  autoComplete="email"
                   {...register('email', {
                     required: 'Заполните поле',
                     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -120,7 +120,7 @@ export const SignInPage = () => {
               >
                 <PasswordInput
                   placeholder="******"
-                  autocomplete="password"
+                  autoComplete="password"
                   {...register('password', {
                     required: 'Заполните поле',
                   })}
@@ -142,7 +142,7 @@ export const SignInPage = () => {
               </HStack>
               <Text mx="auto" fontSize="sm">
                 Еще не зарегистрированы?{' '}
-                <Link variant="underline" href="/signup" colorPalette="teal">
+                <Link variant="underline" href="/sign-up" colorPalette="teal">
                   Зарегистрироваться
                 </Link>
               </Text>
