@@ -6,11 +6,11 @@ import { MdOutlineAlternateEmail as EmailIcon } from 'react-icons/md';
 
 import { Button, Container, Heading, HStack, Input, Link, Stack, Text } from '@chakra-ui/react';
 
-import { Field } from '../../shared/ui/field';
-import { PasswordInput } from '../../shared/ui/password-input';
-import { toaster } from '../../shared/ui/toaster';
+import { Field } from '../../../shared/ui/field';
+import { PasswordInput } from '../../../shared/ui/password-input';
+import { toaster } from '../../../shared/ui/toaster';
 
-import { ITelegramUser } from '../../shared/typings/telegram';
+import { ITelegramUser } from '../../../shared/typings/telegram';
 import { getMyProfile, signIn, signInTg, TG_BOT_ID } from '@/shared/api';
 
 interface IFormSignin {

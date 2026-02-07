@@ -36,7 +36,7 @@ export const Header = () => {
             <Link variant="plain" href="/calendar" fontWeight={600} fontSize={24} minHeight="44px">
               НРИ Календарь
             </Link>
-            {!isAuthenticated ? (
+            {isAuthenticated ? (
               <Popover
                 open={open}
                 onOpenChange={(e) => setOpen(e.open)}

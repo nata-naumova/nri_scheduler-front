@@ -5,14 +5,15 @@ import { PublicOnlyLayout } from './public-only-layout';
 import { ProtectedLayout } from './protected-layout';
 import { Layout } from './layout';
 
-import { EventPage } from '@/pages/event/ui/event';
+import { EventPage } from '@/pages/event/ui/event-page';
 import { CompanyPage } from '@/pages/company/company';
-import { SignInPage } from '@/pages/sign-in/sing-in';
+import { SignInPage } from '@/pages/sign-in/ui/sing-in';
 import { LocationPage } from '@/pages/location/location';
 import { NotFoundPage } from '@/pages/not-found/not-found';
 import { HomePage } from '@/pages/home';
+import SingUpPage from '@/pages/sign-up/signup';
 
-const SingUpPage = lazy(() => import('@/pages/sign-up/signup'));
+// const SingUpPage = lazy(() => import('@/pages/sign-up/signup'));
 const CalendarPage = lazy(() => import('@/pages/calendar/ui/calendar'));
 const ProfilePage = lazy(() => import('@/pages/profile/profile'));
 const ShortProfilePage = lazy(() => import('@/pages/profile/short-profile'));
