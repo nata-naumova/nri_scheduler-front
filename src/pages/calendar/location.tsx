@@ -10,12 +10,12 @@ import {
   DrawerRoot,
   DrawerTitle,
   DrawerTrigger,
-} from '../../ui/drawer';
-import { Field } from '../../ui/field';
-import { addLocation, IApiLocation } from '../../../api';
-import { $profile } from '../../../store/profile';
+} from '@/shared/ui/drawer';
+import { Field } from '@/shared/ui/field';
 import { useEffect, useState } from 'react';
 import { useStore } from '@nanostores/react';
+import { addLocation, IApiLocation } from '@/shared/api';
+import { $profile } from '@/app/store/profile';
 
 const Location = () => {
   const [open, setOpen] = useState(false);

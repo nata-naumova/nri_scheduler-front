@@ -20,7 +20,7 @@ import { getGridColumnsConfig, PROFILE_TEXTS } from '../profile.data';
 import { DialogItem } from '../../../shared/ui/dialog';
 import { toaster } from '../../../shared/ui/toaster';
 import { ViewToggle } from '../../../shared/ui/view-toggle';
-import { approveApplication, IMasterApp, IPlayerApp, rejectApplication } from '../../../api';
+import { approveApplication, IMasterApp, IPlayerApp, rejectApplication } from '@/shared/api';
 
 interface EventListProps {
   isChecked: boolean;
@@ -47,7 +47,7 @@ const EventItem = ({ item, isMasterView, onReject, onApprove }: EventItemProps) 
   const isMaster = isMasterApp(item);
 
   return (
-    <Fragment>
+    <>
       <DialogItem
         item={item}
         trigger={
@@ -86,7 +86,7 @@ const EventItem = ({ item, isMasterView, onReject, onApprove }: EventItemProps) 
         }
         footer={
           isMasterView && (
-            <Fragment>
+            <>
               <Button
                 variant="outline"
                 onClick={() => onReject?.(item.id)}
@@ -97,11 +97,11 @@ const EventItem = ({ item, isMasterView, onReject, onApprove }: EventItemProps) 
               <Button onClick={() => onApprove?.(item.id)} disabled={item.approval === true}>
                 {item.approval ? 'Подтверждено' : 'Подтвердить'}
               </Button>
-            </Fragment>
+            </>
           )
         }
       />
-    </Fragment>
+    </>
   );
 };
 

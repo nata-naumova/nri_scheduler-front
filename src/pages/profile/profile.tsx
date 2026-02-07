@@ -5,6 +5,10 @@ import { EmptyList } from './empty-list';
 import { EventList } from './eventlist';
 import { PROFILE_TABS, PROFILE_TEXTS } from './profile.data';
 import { ProfileInfo } from './profile-info';
+
+import { useEffect, useState } from 'react';
+import { useStore } from '@nanostores/react';
+import { useAuthVerification } from '@/shared/utils';
 import {
   EAbortReason,
   IApiCompany,
@@ -13,12 +17,9 @@ import {
   readMasterAppsList,
   readMyCompanies,
   readPlayerAppsList,
-} from '../../api';
-import { $checkboxState, toggleCheckbox } from '../../app/store/checkboxStore';
-import { $activeTab, setActiveTab } from '../../app/store/tabsStore';
-import { useAuthVerification } from '../../utils';
-import { useEffect, useState } from 'react';
-import { useStore } from '@nanostores/react';
+} from '@/shared/api';
+import { $activeTab, setActiveTab } from '@/app/store/tabsStore';
+import { $checkboxState, toggleCheckbox } from '@/app/store/checkboxStore';
 
 export const ProfilePage = () => {
   const { profile, isAuthenticated } = useAuthVerification();

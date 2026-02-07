@@ -7,8 +7,8 @@ function App() {
   return (
     <ErrorBoundary>
       <ChakraAppProvider>
-      <AppRouter />
-      <Toaster />
+        <AppRouter />
+        <Toaster />
       </ChakraAppProvider>
     </ErrorBoundary>
   );

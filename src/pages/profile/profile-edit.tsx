@@ -14,14 +14,15 @@ import {
 import { ProfileComplete } from './profile-autocomplete';
 import { ProfilePicture } from './profile-picture';
 import { TimesonesList } from '../regions/timezones';
-import { TimezoneRadioGroup } from '../../shared/ui/radio-group';
-import { Field } from '../../shared/ui/field';
-import { toaster } from '../../shared/ui/toaster';
-import { ETzVariant, getMyProfile, readCitiesList, updateMyProfile } from '../../api';
-import { $regions } from '../../app/store/regions';
-import { navBack, useAuthVerification } from '../../utils';
+
 import { useStore } from '@nanostores/react';
 import { useEffect, useState } from 'react';
+import { ETzVariant, getMyProfile, readCitiesList, updateMyProfile } from '@/shared/api';
+import { navBack, useAuthVerification } from '@/shared/utils';
+import { $regions } from '@/app/store/regions';
+import { toaster } from '@/shared/ui/toaster';
+import { Field } from '@/shared/ui/field';
+import { TimezoneRadioGroup } from '@/shared/ui/radio-group';
 
 type ProfileFormData = {
   nickname: string;

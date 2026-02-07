@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {  Box, Button, Container, Flex, HStack, Link, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Container, Flex, HStack, Link, Stack, Text } from '@chakra-ui/react';
 
 import { useStore } from '@nanostores/react';
 import { useAuthVerification } from '@/shared/utils';
@@ -21,12 +21,12 @@ export const Header = () => {
   const handleLogout = () => {
     logout();
     setOpen(false);
-    navigate('/sign-in')
-  }
+    navigate('/sign-in');
+  };
 
   const handleNavigation = (path: string) => {
     navigate(path);
-  }
+  };
 
   return (
     <header>
@@ -47,18 +47,14 @@ export const Header = () => {
                       Профиль
                     </Button>
                     <Button
-                    variant="ghost"
+                      variant="ghost"
                       onClick={() => isVerified && handleNavigation('/regions')}
                       disabled={!isVerified}
                       cursor={isVerified ? 'pointer' : 'not-allowed'}
                     >
                       {isVerified ? 'Регионы и города' : 'Регионы и города (подтвердите эл. почту)'}
                     </Button>
-                    <Button
-                    variant="ghost"
-                      colorPalette="red"
-                      onClick={handleLogout}
-                    >
+                    <Button variant="ghost" colorPalette="red" onClick={handleLogout}>
                       Выйти
                     </Button>
                   </Stack>
@@ -77,10 +73,9 @@ export const Header = () => {
             ) : (
               path !== '/sign-in' &&
               path !== '/sign-up' && (
-                
-                  <Button type="button" h="44px" ml="auto" onClick={() => navigate('/sign-in')}>
-                    Вход и регистрация
-                  </Button>
+                <Button type="button" h="44px" ml="auto" onClick={() => navigate('/sign-in')}>
+                  Вход и регистрация
+                </Button>
               )
             )}
           </Flex>

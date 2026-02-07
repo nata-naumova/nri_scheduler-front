@@ -1,6 +1,5 @@
+import { IApiRegion, readRegionsList } from '@/shared/api';
 import { computed, map } from 'nanostores';
-
-import { type IApiRegion, readRegionsList } from '../api';
 
 type RegionsStore = {
   loading: boolean;

@@ -32,11 +32,17 @@ import {
 } from '@/shared/ui/drawer';
 import { Field } from '@/shared/ui/field';
 
-
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { IApiCompany, IApiCompanyInfo, readCompanyById, updateCompany } from '@/shared/api';
-import { convertEventStyleToCSS, DEFAULT_EVENT_STYLE, IEventStyle, navBack, parseEventStyle, stringifyEventStyle } from '@/shared/utils';
+import {
+  convertEventStyleToCSS,
+  DEFAULT_EVENT_STYLE,
+  IEventStyle,
+  navBack,
+  parseEventStyle,
+  stringifyEventStyle,
+} from '@/shared/utils';
 import { PreviewCompany } from '../calendar/company';
 import { NotFoundPage } from '../not-found/not-found';
 

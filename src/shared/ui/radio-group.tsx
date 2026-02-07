@@ -1,6 +1,5 @@
 import { HStack, RadioGroup } from '@chakra-ui/react';
-
-import { ETzVariant } from '../../api';
+import { ETzVariant } from '../api';
 
 const timezoneVariants = [ETzVariant.CITY, ETzVariant.DEVICE, ETzVariant.OWN] as const;
 

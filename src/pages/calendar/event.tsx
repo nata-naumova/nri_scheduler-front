@@ -23,6 +23,16 @@ import {
 } from '@choc-ui/chakra-autocomplete';
 import dayjs from 'dayjs';
 
+import { useEffect, useMemo, useState } from 'react';
+import {
+  createEvent,
+  IApiCompany,
+  IApiLocation,
+  readLocations,
+  readMyCompanies,
+} from '@/shared/api';
+import { EVENT_FORMAT, YYYY_MM_DD } from '@/shared/utils';
+import { toaster } from '@/shared/ui/toaster';
 import {
   DrawerBackdrop,
   DrawerBody,
@@ -32,18 +42,8 @@ import {
   DrawerRoot,
   DrawerTitle,
   DrawerTrigger,
-} from '../../ui/drawer';
-import { Field } from '../../ui/field';
-import { toaster } from '../../ui/toaster';
-import {
-  createEvent,
-  IApiCompany,
-  IApiLocation,
-  readLocations,
-  readMyCompanies,
-} from '../../../api';
-import { EVENT_FORMAT, YYYY_MM_DD } from '../../../utils';
-import { useEffect, useMemo, useState } from 'react';
+} from '@/shared/ui/drawer';
+import { Field } from '@/shared/ui/field';
 
 interface IFormCreateEvent {
   readonly company: UUID;

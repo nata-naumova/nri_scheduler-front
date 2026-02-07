@@ -12,7 +12,6 @@ import { ITelegramUser } from '@/shared/typings/telegram';
 import { Field } from '@/shared/ui/field';
 import { PasswordInput } from '@/shared/ui/password-input';
 
-
 interface IFormValues {
   readonly name: string;
   readonly email: string;

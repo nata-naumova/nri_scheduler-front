@@ -1,16 +1,13 @@
-import { Fragment, h } from 'preact';
-import { useCallback, useEffect, useState } from 'preact/hooks';
-import { route as navigate } from 'preact-router';
-
+import { $avatarLink, IStoreProfile, TIMEZONES } from '@/app/store/profile';
+import { sendVerificationLink } from '@/shared/api';
+import { Avatar } from '@/shared/ui/avatar';
+import { HoverCard } from '@/shared/ui/hover-card';
+import { Check, Warning } from '@/shared/ui/icons';
+import { toaster } from '@/shared/ui/toaster';
 import { Button, DataList, Heading, HStack, Separator, Stack } from '@chakra-ui/react';
-import { useStore } from '@nanostores/preact';
-
-import { Avatar } from '../../shared/ui/avatar';
-import { HoverCard } from '../../shared/ui/hover-card';
-import { Check, Warning } from '../../shared/ui/icons';
-import { toaster } from '../../shared/ui/toaster';
-import { sendVerificationLink } from '../../api';
-import { $avatarLink, IStoreProfile, TIMEZONES } from '../../app/store/profile';
+import { useStore } from '@nanostores/react';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const NOT_SET = 'Не установлен';
 
@@ -24,6 +21,8 @@ export const ProfileInfo = ({ user }: IProfileInfoProps) => {
   const [verificationSent, setVerificationSent] = useState(false);
 
   const avatarLink = useStore($avatarLink);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeZone(

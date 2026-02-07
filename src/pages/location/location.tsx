@@ -27,7 +27,6 @@ const LocationCard = ({ location }: { location: IApiLocation }) => {
 
   const iconLink = calcMapIconLink(location.map_link);
 
-
   return (
     <Card.Root width="full">
       <Card.Body>
