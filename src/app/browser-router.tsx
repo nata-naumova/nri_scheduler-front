@@ -5,15 +5,15 @@ import { PublicOnlyLayout } from './public-only-layout';
 import { ProtectedLayout } from './protected-layout';
 import { Layout } from './layout';
 
-import { EventPage } from '@/pages/event/ui/event-page';
-import { CompanyPage } from '@/pages/company/company';
-import { SignInPage } from '@/pages/sign-in/ui/sing-in';
-import { LocationPage } from '@/pages/location/location';
-import { NotFoundPage } from '@/pages/not-found/not-found';
-import { HomePage } from '@/pages/home';
-import SingUpPage from '@/pages/sign-up/signup';
+import SingUpPage from '@/pages/sign-up/ui/sign-up-page';
+// import { HomePage } from '@/pages/home';
+import { SignInPage } from '@/pages/sign-in/ui/sing-in-page';
+import { EventPage } from '@/pages/event';
+import { CompanyPage } from '@/pages/company/ui/company';
+import { LocationPage } from '@/pages/location/ui/location';
+import { NotFoundPage } from '@/pages/not-found/ui/not-found';
 
-// const SingUpPage = lazy(() => import('@/pages/sign-up/signup'));
+// const SingUpPage = lazy(() => import('@/pages/sign-up/ui/signup'));
 const CalendarPage = lazy(() => import('@/pages/calendar/ui/calendar'));
 const ProfilePage = lazy(() => import('@/pages/profile/profile'));
 const ShortProfilePage = lazy(() => import('@/pages/profile/short-profile'));
@@ -25,14 +25,13 @@ function AppRouter() {
   return (
     <Suspense fallback={<div>Загрузка...</div>}>
       <Routes>
+        <Route element={<PublicOnlyLayout />}>
+          <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/sign-up" element={<SingUpPage />} />
+        </Route>
         <Route element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-
-          <Route element={<PublicOnlyLayout />}>
-            <Route path="/sign-in" element={<SignInPage />} />
-            <Route path="/sign-up" element={<SingUpPage />} />
-          </Route>
+          {/* <Route path="/" element={<HomePage />} /> */}
+          <Route path="/" element={<CalendarPage />} />
 
           <Route element={<ProtectedLayout />}>
             <Route path="/event/:id" element={<EventPage />} />

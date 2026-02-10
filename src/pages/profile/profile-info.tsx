@@ -1,5 +1,6 @@
 import { $avatarLink, IStoreProfile, TIMEZONES } from '@/app/store/profile';
-import { sendVerificationLink } from '@/shared/api';
+import { sendVerificationLink } from '@/shared/api/auth';
+
 import { Avatar } from '@/shared/ui/avatar';
 import { HoverCard } from '@/shared/ui/hover-card';
 import { Check, Warning } from '@/shared/ui/icons';

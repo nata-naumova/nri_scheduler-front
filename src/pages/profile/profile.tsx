@@ -9,17 +9,15 @@ import { ProfileInfo } from './profile-info';
 import { useEffect, useState } from 'react';
 import { useStore } from '@nanostores/react';
 import { useAuthVerification } from '@/shared/utils';
-import {
-  EAbortReason,
-  IApiCompany,
-  IMasterApp,
-  IPlayerApp,
-  readMasterAppsList,
-  readMyCompanies,
-  readPlayerAppsList,
-} from '@/shared/api';
+
 import { $activeTab, setActiveTab } from '@/app/store/tabsStore';
 import { $checkboxState, toggleCheckbox } from '@/app/store/checkboxStore';
+import { IApiCompany } from '@/entities/company/api/types';
+import { IMasterApp, IPlayerApp } from '@/entities/user/api/types';
+import { readPlayerAppsList } from '@/entities/user/api/api-player';
+import { readMasterAppsList } from '@/entities/user/api/api-master';
+import { readMyCompanies } from '@/entities/company/api/api';
+import { EAbortReason } from '@/shared/api/types';
 
 export const ProfilePage = () => {
   const { profile, isAuthenticated } = useAuthVerification();

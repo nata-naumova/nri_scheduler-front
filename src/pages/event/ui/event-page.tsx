@@ -15,11 +15,10 @@ import {
 
 import dayjs from 'dayjs';
 
-import { NotFoundPage } from '../../not-found/not-found';
+import { NotFoundPage } from '../../not-found/ui/not-found';
 import { useStore } from '@nanostores/react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IApiEvent, IApiLocation, readEvent, readLocations, updateEvent } from '@/shared/api';
 import { $tz } from '@/app/store/profile';
 import { EVENT_FORMAT, navBack, YYYY_MM_DD } from '@/shared/utils';
 import {
@@ -35,6 +34,10 @@ import {
 import { Field } from '@/shared/ui/field';
 import { EventCardSkeleton } from './event-skeleton';
 import { EventCard } from './event-card';
+import { IApiEvent } from '@/entities/event/api/types';
+import { IApiLocation } from '@/entities/location/api/types';
+import { readLocations } from '@/entities/location/api/api';
+import { readEvent, updateEvent } from '@/entities/event/api/api-event';
 
 interface IFormEditEvent {
   readonly company: UUID;

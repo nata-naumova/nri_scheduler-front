@@ -1,5 +1,5 @@
-import '@schedule-x/theme-default/dist/index.css';
-import '../calendar/calendar.css';
+// import '@schedule-x/theme-default/dist/index.css';
+// import '../calendar/calendar.css';
 
 import { useForm } from 'react-hook-form';
 
@@ -34,7 +34,6 @@ import { Field } from '@/shared/ui/field';
 
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { IApiCompany, IApiCompanyInfo, readCompanyById, updateCompany } from '@/shared/api';
 import {
   convertEventStyleToCSS,
   DEFAULT_EVENT_STYLE,
@@ -43,8 +42,9 @@ import {
   parseEventStyle,
   stringifyEventStyle,
 } from '@/shared/utils';
-import { PreviewCompany } from '../calendar/company';
-import { NotFoundPage } from '../not-found/not-found';
+import { NotFoundPage } from '@/pages/not-found/ui/not-found';
+import { IApiCompanyInfo } from '@/entities/company/api/types';
+import { readCompanyById, updateCompany } from '@/entities/company/api/api';
 
 interface CompanyFormValues extends IApiCompany {
   style: IEventStyle;

@@ -3,6 +3,12 @@ import { ajax, prepareAjax } from './ajax';
 import { EVerificationChannel, POST, URL_ENCODED } from '../config/constants';
 import { ITelegramUser } from '../typings/telegram';
 
+const FAKE_USER = {
+  id: 1,
+  email: 'admin@ya.ru',
+  password: 'admin',
+};
+
 export const registration = (nickname: string, email: string, password: string) => {
   return ajax<null>(
     '/api/registration',

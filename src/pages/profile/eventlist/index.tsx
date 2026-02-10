@@ -1,7 +1,5 @@
 import type { UUID } from 'node:crypto';
 
-import { Fragment, h } from 'preact';
-
 import {
   Badge,
   Button,
@@ -13,14 +11,15 @@ import {
   Switch,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import dayjs from 'dayjs';
 
-import { EmptyList } from '../empty-list';
+import dayjs from 'dayjs';
+import { IMasterApp, IPlayerApp } from '@/entities/user/api/types';
+import { DialogItem } from '@/shared/ui/dialog';
 import { getGridColumnsConfig, PROFILE_TEXTS } from '../profile.data';
-import { DialogItem } from '../../../shared/ui/dialog';
-import { toaster } from '../../../shared/ui/toaster';
-import { ViewToggle } from '../../../shared/ui/view-toggle';
-import { approveApplication, IMasterApp, IPlayerApp, rejectApplication } from '@/shared/api';
+import { toaster } from '@/shared/ui/toaster';
+import { approveApplication, rejectApplication } from '@/entities/event/api/api-event';
+import { ViewToggle } from '@/shared/ui/view-toggle';
+import { EmptyList } from '../empty-list';
 
 interface EventListProps {
   isChecked: boolean;

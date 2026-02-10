@@ -24,13 +24,7 @@ import {
 import dayjs from 'dayjs';
 
 import { useEffect, useMemo, useState } from 'react';
-import {
-  createEvent,
-  IApiCompany,
-  IApiLocation,
-  readLocations,
-  readMyCompanies,
-} from '@/shared/api';
+
 import { EVENT_FORMAT, YYYY_MM_DD } from '@/shared/utils';
 import { toaster } from '@/shared/ui/toaster';
 import {
@@ -44,6 +38,10 @@ import {
   DrawerTrigger,
 } from '@/shared/ui/drawer';
 import { Field } from '@/shared/ui/field';
+import { IApiLocation } from '@/entities/location/api/types';
+import { readMyCompanies } from '@/entities/company/api/api';
+import { readLocations } from '@/entities/location/api/api';
+import { createEvent } from '@/entities/event/api/api-event';
 
 interface IFormCreateEvent {
   readonly company: UUID;

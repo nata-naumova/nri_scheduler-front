@@ -1,6 +1,4 @@
-import { CSSProperties } from 'react';
-
-import { Container, Flex } from '@chakra-ui/react';
+import { Container, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 
 import { useStore } from '@nanostores/react';
 import { $mastery } from '@/app/store/mastery';
@@ -20,6 +18,14 @@ export const CalendarPage = () => {
   return (
     <section className={'calendar-page'}>
       <Container h={'full'} pb={'6'}>
+        <Stack>
+          <Heading>Добро пожаловать в НРИ Календарь</Heading>
+          <Text>
+            Мы создали этот сервис, чтобы упростить вашу жизнь. Начните использовать все его
+            возможности прямо сейчас!
+          </Text>
+        </Stack>
+
         <Flex gap="4" direction="column" h={'full'}>
           <CalendarToolbar />
           <CalendarWidget calendar={calendar} mastery={mastery} />

@@ -1,6 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import { ScheduleXCalendar, useCalendarApp } from '@schedule-x/react';
 
+import '@schedule-x/theme-default/dist/index.css';
+
 interface CalendarWidgetProps {
   calendar: ReturnType<typeof useCalendarApp>;
   mastery?: boolean;

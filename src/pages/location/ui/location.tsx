@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import type { UUID } from 'node:crypto';
-
 import {
   Button,
   Card,
@@ -13,9 +11,10 @@ import {
   Image,
   Skeleton,
 } from '@chakra-ui/react';
-import { IApiLocation, readLocationById } from '@/shared/api';
 import { calcMapIconLink, navBack } from '@/shared/utils';
-import { NotFoundPage } from '../not-found/not-found';
+import { IApiLocation } from '@/entities/location/api/types';
+import { readLocationById } from '@/entities/location/api/api';
+import { NotFoundPage } from '@/pages/not-found/ui/not-found';
 
 const LocationCard = ({ location }: { location: IApiLocation }) => {
   const stats = [

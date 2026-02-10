@@ -1,5 +1,6 @@
 import { $profile, $tz } from '@/app/store/profile';
-import { applyEvent, cancelEvent, EScenarioStatus, IApiEvent, reopenEvent } from '@/shared/api';
+import { applyEvent, cancelEvent, reopenEvent } from '@/entities/event/api/api-event';
+import { IApiEvent } from '@/entities/event/api/types';
 import { CloseButton } from '@/shared/ui/close-button';
 import { HoverCard } from '@/shared/ui/hover-card';
 import { Warning } from '@/shared/ui/icons';

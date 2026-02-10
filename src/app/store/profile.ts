@@ -6,9 +6,12 @@ import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { atom, computed, map, task } from 'nanostores';
 import { procetar } from 'procetar';
-import { API_HOST, ETzVariant, getTgAvatar, IApiProfile } from '@/shared/api';
 import { YYYY_MM_DD } from '@/shared/utils';
 import { toaster } from '@/shared/ui/toaster';
+import { ETzVariant } from '@/shared/api/types';
+import { IApiProfile } from '@/entities/user/api/types';
+import { getTgAvatar } from '@/entities/user/api/api-profile';
+import { API_HOST } from '@/shared/config/constants';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

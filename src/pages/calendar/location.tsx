@@ -14,8 +14,10 @@ import {
 import { Field } from '@/shared/ui/field';
 import { useEffect, useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { addLocation, IApiLocation } from '@/shared/api';
+
 import { $profile } from '@/app/store/profile';
+import { IApiLocation } from '@/entities/location/api/types';
+import { addLocation } from '@/entities/location/api/api';
 
 const Location = () => {
   const [open, setOpen] = useState(false);
