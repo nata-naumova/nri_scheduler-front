@@ -1,15 +1,4 @@
-import { useState } from 'react';
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  HStack,
-  IconButton,
-  Stack,
-  Popover,
-  Portal,
-} from '@chakra-ui/react';
+import { Box, Button, Container, Flex, HStack } from '@chakra-ui/react';
 
 import { useAuthVerification } from '@/shared/utils';
 import { $avatarLink } from '@/app/store/profile';
@@ -28,7 +17,6 @@ export const Header = () => {
   const path = location.pathname;
   const navigate = useNavigate();
 
-  const [open, setOpen] = useState(false);
   // const { profile, isAuthenticated, isVerified } = useAuthVerification();
   // const avatarLink = useStore($avatarLink);
 
@@ -38,12 +26,6 @@ export const Header = () => {
     link: 'https://i.pinimg.com/1200x/40/80/31/408031a6390ed009ae9da918fae73032.jpg',
   };
   const isVerified = true;
-
-  const handleLogout = () => {
-    logout();
-    setOpen(false);
-    navigate('/sign-in');
-  };
 
   const handleNavigation = (path: string) => {
     navigate(path);

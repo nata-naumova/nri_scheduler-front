@@ -14,6 +14,7 @@ import {
   InputAddon,
   Stack,
 } from '@chakra-ui/react';
+
 import {
   AutoComplete,
   AutoCompleteGroup,
@@ -41,7 +42,7 @@ import { Field } from '@/shared/ui/field';
 import { IApiLocation } from '@/entities/location/api/types';
 import { readMyCompanies } from '@/entities/company/api/api';
 import { readLocations } from '@/entities/location/api/api';
-import { createEvent } from '@/entities/event/api/api-event';
+import { IApiCompany } from '@/entities/company/api/types';
 
 interface IFormCreateEvent {
   readonly company: UUID;
@@ -156,24 +157,24 @@ const Event = (props: IEventProps) => {
     const date = dayjs.tz(`${start} ${startTime}`, EVENT_FORMAT, props.tz);
 
     setIsDisableCreateEventSubmitButton(true);
-    createEvent(
-      company,
-      date.toISOString(),
-      location,
-      Number(max_slots) || null,
-      Number(plan_duration) || null,
-    )
-      .then((res) => {
-        if (res) {
-          toaster.success({ title: 'Событие успешно создано' });
-          props.setOpenDraw(false);
-          props.getNewEvent(res.payload);
-          reset();
-        }
-      })
-      .finally(() => {
-        setIsDisableCreateEventSubmitButton(false);
-      });
+    // createEvent(
+    //   company,
+    //   date.toISOString(),
+    //   location,
+    //   Number(max_slots) || null,
+    //   Number(plan_duration) || null,
+    // )
+    //   .then((res) => {
+    //     if (res) {
+    //       toaster.success({ title: 'Событие успешно создано' });
+    //       props.setOpenDraw(false);
+    //       props.getNewEvent(res.payload);
+    //       reset();
+    //     }
+    //   })
+    //   .finally(() => {
+    //     setIsDisableCreateEventSubmitButton(false);
+    //   });
   });
 
   useEffect(() => {

@@ -1,6 +1,5 @@
+import { $profile } from '@/entities/user/profile/model/profile.store';
 import { atom, computed } from 'nanostores';
-
-import { $profile } from './profile';
 
 const MASTERY_KEY = 'nri_mastery';
 const TRUE = 'true';

@@ -15,10 +15,11 @@ import {
 import dayjs from 'dayjs';
 import { IMasterApp, IPlayerApp } from '@/entities/user/api/types';
 import { DialogItem } from '@/shared/ui/dialog';
-import { getGridColumnsConfig, PROFILE_TEXTS } from '../profile.data';
+
 import { toaster } from '@/shared/ui/toaster';
 import { approveApplication, rejectApplication } from '@/entities/event/api/api-event';
 import { ViewToggle } from '@/shared/ui/view-toggle';
+import { getGridColumnsConfig, PROFILE_TEXTS } from '../profile-tabs/model/profile.data';
 import { EmptyList } from '../empty-list';
 
 interface EventListProps {

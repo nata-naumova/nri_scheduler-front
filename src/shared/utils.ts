@@ -3,7 +3,8 @@ import type { CalendarType } from '@schedule-x/calendar';
 import { useStore } from '@nanostores/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { $profile, IStoreProfile, TStoreProfile } from '@/app/store/profile';
+import { IStoreProfile, TStoreProfile } from '@/entities/user/profile/model/profile.types';
+import { $profile } from '@/entities/user/profile/model/profile.store';
 
 export const navBack = () => history.back();
 

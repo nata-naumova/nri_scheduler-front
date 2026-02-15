@@ -13,7 +13,7 @@ import {
 
 import { ProfileComplete } from './profile-autocomplete';
 import { ProfilePicture } from './profile-picture';
-import { TimesonesList } from '../regions/timezones';
+import { TimesonesList } from '../pages/regions/timezones';
 
 import { useStore } from '@nanostores/react';
 import { useEffect, useState } from 'react';

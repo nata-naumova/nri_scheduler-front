@@ -2,8 +2,8 @@ import type { UUID } from 'node:crypto';
 
 import { Container, DataList, Heading, HStack, Separator, Skeleton, Stack } from '@chakra-ui/react';
 
-import { Avatar } from '../../shared/ui/avatar';
-import { Check, Warning } from '../../shared/ui/icons';
+import { Avatar } from '../shared/ui/avatar';
+import { Check, Warning } from '../shared/ui/icons';
 import { EAbortReason, getAnotherUserProfile, IApiShortProfile } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';

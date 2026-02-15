@@ -9,21 +9,70 @@ import { createCalendarControlsPlugin } from '@schedule-x/calendar-controls';
 import { viewMonthGrid } from '@schedule-x/calendar';
 
 import { calendarApi } from '../api/calendar-api';
-import { mockEvents, mockBgEvents } from '../model/mock-events';
-import { Temporal } from '@js-temporal/polyfill';
+import { mockBgEvents } from '../model/mock-events';
+
 import { calendarConfig } from '@/shared/config/calendar-config';
+import { IApiEvent } from '@/entities/event/api/types';
+import { useStore } from '@nanostores/react';
+
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+import { $tz } from '@/entities/user/timezone/model/tz.store';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const useCalendarEvents = () => {
   const navigate = useNavigate();
+  const tz = useStore($tz);
 
-  // Плагины календаря
   const [calendarControls] = useState(() => createCalendarControlsPlugin());
   const [recurrencePlugin] = useState(() => createEventRecurrencePlugin());
   const [eventsServicePlugin] = useState(() => createEventsServicePlugin());
 
+  const apiEventToCalendarEvent = (e: IApiEvent) => {
+    const dateStr = e.date.includes('T') ? e.date : `${e.date}T09:00:00`;
+
+    const start = Temporal.ZonedDateTime.from(`${dateStr}[${tz}]`);
+    const end = start.add({ hours: e.plan_duration ?? 3 });
+
+    return {
+      id: e.id,
+      title: `${e.company} — ${e.master}`,
+      start,
+      end,
+      calendarId: 'personal',
+      apiEvent: e,
+    };
+  };
+
+  const loadEvents = async (start?: string, end?: string) => {
+    try {
+      const apiEvents = await calendarApi.getEvents(start, end);
+      const calendarEvents = apiEvents.map(apiEventToCalendarEvent);
+
+      // Сохраняем события в плагине
+      if (eventsServicePlugin.set) {
+        eventsServicePlugin.set(calendarEvents);
+      } else {
+        eventsServicePlugin.removeAll();
+        calendarEvents.forEach(eventsServicePlugin.add);
+      }
+
+      console.log('API события:', apiEvents);
+      console.log('События для календаря:', calendarEvents);
+
+      return calendarEvents;
+    } catch (err) {
+      console.error('Ошибка загрузки событий', err);
+      return [];
+    }
+  };
+
   const calendar = useCalendarApp({
     locale: 'ru-RU',
-    timezone: 'Asia/Tokyo',
+    timezone: tz,
     defaultView: 'monthGrid',
     views: [viewMonthGrid],
     calendars: calendarConfig,
@@ -33,35 +82,18 @@ export const useCalendarEvents = () => {
     monthGridOptions: { nEventsPerDay: 2 },
     callbacks: {
       onRangeUpdate(range) {
-        console.log('onRangeUpdate', range.start, range.end);
         loadEvents(range.start, range.end);
       },
       onEventClick(event) {
-        navigate(`/event/${event.id}`);
+        navigate(`/event/${event.id}`, { state: event.apiEvent });
       },
     },
   });
 
-  // Функция загрузки событий через мок API
-  const loadEvents = async (start?: Temporal.ZonedDateTime, end?: Temporal.ZonedDateTime) => {
-    const events = await calendarApi.getEvents(start, end);
-    console.log('Events: ', events);
-
-    // Добавляем события через EventsServicePlugin
-    events.forEach((e: any) => eventsServicePlugin.add(e));
-
-    return events;
-  };
-
-  // Загрузка всех событий при монтировании
   useEffect(() => {
+    if (!calendar || !eventsServicePlugin) return;
     loadEvents();
-  }, []);
-
-  // Вызов getAll для синхронизации EventsServicePlugin
-  useEffect(() => {
-    eventsServicePlugin.getAll();
-  }, []);
+  }, [calendar, eventsServicePlugin]);
 
   return {
     calendar,

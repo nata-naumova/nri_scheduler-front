@@ -9,15 +9,15 @@ import SingUpPage from '@/pages/sign-up/ui/sign-up-page';
 // import { HomePage } from '@/pages/home';
 import { SignInPage } from '@/pages/sign-in/ui/sing-in-page';
 import { EventPage } from '@/pages/event';
-import { CompanyPage } from '@/pages/company/ui/company';
 import { LocationPage } from '@/pages/location/ui/location';
 import { NotFoundPage } from '@/pages/not-found/ui/not-found';
+import { CompanyPage } from '@/pages/company/ui/company-page';
 
 // const SingUpPage = lazy(() => import('@/pages/sign-up/ui/signup'));
 const CalendarPage = lazy(() => import('@/pages/calendar/ui/calendar'));
-const ProfilePage = lazy(() => import('@/pages/profile/profile'));
-const ShortProfilePage = lazy(() => import('@/pages/profile/short-profile'));
-const ProfileEdit = lazy(() => import('@/pages/profile/profile-edit'));
+const ProfilePage = lazy(() => import('@/pages/profile'));
+// const ShortProfilePage = lazy(() => import('@/widgets/short-profile'));
+// const ProfileEdit = lazy(() => import('@/widgets/profile-edit'));
 const VerificationPage = lazy(() => import('@/pages/verification/verification'));
 // const RegionsPage = lazy(() => import('@/components/pages/regions/regions'));
 
@@ -38,8 +38,8 @@ function AppRouter() {
             <Route path="/company/:id" element={<CompanyPage />} />
             <Route path="/location/:id" element={<LocationPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profile/:id" element={<ShortProfilePage />} />
-            <Route path="/profile/edit" element={<ProfileEdit />} />
+            {/* <Route path="/profile/:id" element={<ShortProfilePage />} /> */}
+            {/* <Route path="/profile/edit" element={<ProfileEdit />} /> */}
             <Route path="/verification" element={<VerificationPage />} />
             {/* <Route path="/regions" element={<RegionsPage />} /> */}
           </Route>

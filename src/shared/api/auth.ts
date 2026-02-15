@@ -1,7 +1,8 @@
-import { leave, setFromTgAuthorization } from '@/app/store/profile';
 import { ajax, prepareAjax } from './ajax';
 import { EVerificationChannel, POST, URL_ENCODED } from '../config/constants';
 import { ITelegramUser } from '../typings/telegram';
+import { setFromTgAuthorization } from '@/entities/user/avatar/model/avatar.store';
+import { leave } from '@/entities/user/profile/model/profile.store';
 
 const FAKE_USER = {
   id: 1,

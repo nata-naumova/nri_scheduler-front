@@ -1,8 +1,7 @@
+import { IApiCompany } from '@/entities/company/api/types';
 import { Card, Grid, Heading, HStack, Link, Stack, useBreakpointValue } from '@chakra-ui/react';
-
-import { getGridColumnsConfig } from '../profile.data';
-import { ViewToggle } from '../../../shared/ui/view-toggle';
-import { IApiCompany } from '../../../api';
+import { getGridColumnsConfig } from '../profile-tabs/model/profile.data';
+import { ViewToggle } from '@/shared/ui/view-toggle';
 
 interface ICompList {
   readonly list: ReadonlyArray<IApiCompany>;

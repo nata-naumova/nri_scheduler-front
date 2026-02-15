@@ -1,4 +1,6 @@
-import { EVerificationChannel, softCheck, verifyEmail } from '@/shared/api';
+import { softCheck } from '@/entities/user/api/api-profile';
+import { verifyEmail } from '@/shared/api/auth';
+import { EVerificationChannel } from '@/shared/config/constants';
 import { Check, Error } from '@/shared/ui/icons';
 import { toaster } from '@/shared/ui/toaster';
 import { Box, Button, Container, HStack, Image, Link } from '@chakra-ui/react';
