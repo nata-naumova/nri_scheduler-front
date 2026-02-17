@@ -1,48 +1,30 @@
-import { useForm } from 'react-hook-form';
-
 import {
-  Button,
+  Bleed,
+  Box,
   Container,
-  createListCollection,
-  Group,
+  Grid,
+  Heading,
+  Highlight,
   HStack,
-  Input,
-  InputAddon,
-  NativeSelect,
+  Image,
   Stack,
 } from '@chakra-ui/react';
 
-import { NotFoundPage } from '../../not-found/ui/not-found';
-import { useStore } from '@nanostores/react';
-import { useEffect, useMemo, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { EVENT_FORMAT, navBack, YYYY_MM_DD } from '@/shared/utils';
-import {
-  DrawerBackdrop,
-  DrawerBody,
-  DrawerCloseTrigger,
-  DrawerContent,
-  DrawerHeader,
-  DrawerRoot,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/shared/ui/drawer';
-import { Field } from '@/shared/ui/field';
-import { EventCardSkeleton } from '../../../entities/event/ui/event-skeleton';
-import { EventCard } from '../../../entities/event/ui/event-card/event-card';
 import { IApiEvent } from '@/entities/event/api/types';
-import { IApiLocation } from '@/entities/location/api/types';
-import { readLocations } from '@/entities/location/api/api';
-import { readEvent, updateEvent } from '@/entities/event/api/api-event';
-import { IFormEditEvent } from '../model/types';
-import { $tz } from '@/entities/user/timezone/model/tz.store';
+import { readEvent } from '@/entities/event/api/api-event';
 
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import { EventWrapper } from '@/entities/event/ui/event-wrapper';
-import { EventForm } from '@/entities/event/ui/event-form';
+import { AppBreadcrumb } from '@/shared/ui/custom/app-breadcrumbs';
+import { EventDetailsForm } from '@/features/event/event-card-stats';
+import { useStore } from '@nanostores/react';
+import { $tz } from '@/entities/user/timezone/model/tz.store';
+import { EventCardFooter } from '@/features/event/event-card-footer';
+import { useUser } from '@/features/auth/model/useAuth';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -51,10 +33,12 @@ export const EventPage = () => {
   const { id } = useParams();
   const eventId = id ? String(id) : null;
 
+  const tz = useStore($tz);
+  const { user } = useUser();
+
   const [event, setEvent] = useState<IApiEvent | null>(null);
   const [fetching, setFetching] = useState(false);
-  const [open, setOpen] = useState(false);
-  const tz = useStore($tz);
+  const nowDate = dayjs().tz(tz);
 
   useEffect(() => {
     if (!eventId) return;
@@ -72,43 +56,32 @@ export const EventPage = () => {
       .finally(() => setFetching(false));
   };
 
-  const handleSubmit = (data: any) => {
-    console.log('Submit form data', data);
-  };
-
   return (
     <section>
       <Container>
-        <Button mb={4} onClick={navBack}>
-          Вернуться назад
-        </Button>
-        {event?.you_are_master && (
-          <HStack alignItems="top">
-            <DrawerRoot
-              open={open}
-              onOpenChange={(e) => {
-                setOpen(e.open);
-              }}
-            >
-              <DrawerBackdrop />
-              <DrawerTrigger asChild>
-                <Button colorPalette="cyan" mt="4" mb="4" variant="solid">
-                  Редактировать событие
-                </Button>
-              </DrawerTrigger>
-              <DrawerContent>
-                <DrawerHeader>
-                  <DrawerTitle>Редактирование события</DrawerTitle>
-                </DrawerHeader>
-                <DrawerBody>
-                  <EventForm event={event} onSubmit={handleSubmit} />
-                </DrawerBody>
-                <DrawerCloseTrigger />
-              </DrawerContent>
-            </DrawerRoot>
-          </HStack>
-        )}
-        <EventWrapper event={event} fetching={fetching} updateEventData={updateEventData} />
+        <Image
+          rounded="md"
+          w="full"
+          h="220px"
+          src="https://i.pinimg.com/1200x/bd/90/a6/bd90a6c8ea07dc7390e461b655a8b1c6.jpg"
+          alt="John Doe"
+        />
+
+        <AppBreadcrumb />
+        <Grid templateColumns="2fr 1fr" gap="6" mt={4}>
+          <EventDetailsForm event={event} tz={tz} />
+          <EventCardFooter
+            event={event}
+            nowDate={nowDate}
+            youApplied={false}
+            isLoading={fetching}
+            profileSigned={!!user?.signed}
+            profileVerified={!!user?.verified}
+            onSubscribe={() => console.log('handleSubscribe')}
+            onCancelEvent={() => console.log('onCancelEvent')}
+            onReopenEvent={() => console.log('onReopenEvent')}
+          />
+        </Grid>
       </Container>
     </section>
   );

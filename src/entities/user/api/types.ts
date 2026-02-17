@@ -1,8 +1,7 @@
-import { UUID } from 'crypto';
 import { ETzVariant } from '@/shared/api/types';
 
 export interface IApiProfile {
-  readonly id: UUID;
+  readonly id: string;
   readonly email: string | null;
   readonly email_verified: boolean;
   readonly tg_id: number | null;
@@ -17,7 +16,7 @@ export interface IApiProfile {
 }
 
 export interface IApiShortProfile {
-  readonly id: UUID;
+  readonly id: string;
   readonly nickname: string;
   readonly about: string | null;
   readonly avatar_link: string | null;
@@ -27,37 +26,38 @@ export interface IApiShortProfile {
 }
 
 export interface IApiUserPair {
-  readonly id: UUID;
+  readonly id: string;
   readonly nickname: string;
 }
 
-export interface IPlayerApp {
-  readonly approval: boolean | null;
-  readonly company_id: UUID;
-  readonly company_name: string;
+export interface IBaseApp {
+  readonly id: string;
+  readonly event_id: string;
+  readonly event_date: string;
   readonly event_cancelled: boolean;
-  readonly event_date: string; // "2025-04-15T07:24:00Z"
-  readonly event_id: UUID;
-  readonly id: UUID;
-  readonly location_id: UUID;
+
+  readonly company_id: string;
+  readonly company_name: string;
+
+  readonly location_id: string;
   readonly location_name: string;
-  readonly master_id: UUID;
+
+  readonly approval: boolean | null;
+}
+
+export interface IPlayerApp extends IBaseApp {
+  readonly role: 'player';
+  readonly master_id: string;
   readonly master_name: string;
 }
 
-export interface IMasterApp {
-  readonly approval: boolean | null;
-  readonly company_id: UUID;
-  readonly company_name: string;
-  readonly event_cancelled: boolean;
-  readonly event_date: string; // "2025-04-15T07:24:00Z"
-  readonly event_id: UUID;
-  readonly id: UUID;
-  readonly location_id: UUID;
-  readonly location_name: string;
-  readonly player_id: UUID;
+export interface IMasterApp extends IBaseApp {
+  readonly role: 'master';
+  readonly player_id: string;
   readonly player_name: string;
 }
+
+export type IApp = IPlayerApp | IMasterApp;
 
 export interface ITouchesFilter {
   readonly masters: boolean | null | undefined;

@@ -46,7 +46,7 @@ export const EventCard = ({ event, updateEventData }: EventCardProps) => {
   return (
     <Card.Root width="full">
       <Card.Body>
-        <EventCardHeader event={event} />
+        {/* <EventCardHeader event={event} /> */}
         <EventCardStats event={event} tz={tz} />
       </Card.Body>
 

@@ -1,31 +1,19 @@
 import { Box, Button, Container, Flex, HStack } from '@chakra-ui/react';
 
-import { useAuthVerification } from '@/shared/utils';
-import { $avatarLink } from '@/app/store/profile';
-
 import { Avatar } from '@/shared/ui/avatar';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { logout } from '@/shared/api/auth';
-import { useStore } from '@nanostores/react';
 import { Logotype } from '@/shared/ui/custom/logotype';
 import { Tooltip } from '@/shared/ui/tooltip';
-import { LuChevronDown } from 'react-icons/lu';
 import { HeaderMenu } from '@/features/header-menu/ui/header-menu';
+import { useAuth, useUser } from '@/features/auth/model/useAuth';
 
 export const Header = () => {
   const location = useLocation();
   const path = location.pathname;
   const navigate = useNavigate();
 
-  // const { profile, isAuthenticated, isVerified } = useAuthVerification();
-  // const avatarLink = useStore($avatarLink);
-
-  const profile = {
-    email: 'test@ya.ru',
-    nickname: 'test',
-    link: 'https://i.pinimg.com/1200x/40/80/31/408031a6390ed009ae9da918fae73032.jpg',
-  };
-  const isVerified = true;
+  const { isAuthenticated } = useAuth();
+  const { user } = useUser();
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -39,23 +27,26 @@ export const Header = () => {
             <Logotype href="/" />
 
             <HStack gap={6}>
-              <Button variant="surface" onClick={() => navigate('/sign-in')}>
-                Авторизация
-              </Button>
-              <HStack>
-                <Tooltip content="Профиль">
-                  <Button
-                    variant="ghost"
-                    w={11}
-                    h={11}
-                    onClick={() => handleNavigation('/profile')}
-                  >
-                    <Avatar src={profile?.link} fallback={profile?.nickname} />
-                  </Button>
-                </Tooltip>
+              {isAuthenticated ? (
+                <Button variant="surface" onClick={() => navigate('/sign-in')}>
+                  Авторизация
+                </Button>
+              ) : (
+                <HStack>
+                  <Tooltip content="Профиль">
+                    <Button
+                      variant="ghost"
+                      w={11}
+                      h={11}
+                      onClick={() => handleNavigation('/profile')}
+                    >
+                      <Avatar src="#" fallback={user?.nickname} />
+                    </Button>
+                  </Tooltip>
 
-                <HeaderMenu profile={profile} isVerified={isVerified} />
-              </HStack>
+                  <HeaderMenu profile={user} isVerified={true} />
+                </HStack>
+              )}
             </HStack>
           </Flex>
         </Container>

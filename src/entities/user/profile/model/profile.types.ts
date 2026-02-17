@@ -2,7 +2,7 @@ import { ETzVariant } from '@/shared/api/types';
 import { UUID } from 'crypto';
 
 export interface IStoreProfile {
-  readonly id: UUID;
+  readonly id: string;
   readonly email: string | null;
   readonly email_verified: boolean;
   readonly nickname: string;
@@ -11,7 +11,7 @@ export interface IStoreProfile {
   readonly region: string | null;
   readonly timezone_offset: number | null;
   readonly tz_variant: ETzVariant | null;
-  readonly signed: true;
+  readonly signed: boolean;
   readonly verified: boolean;
 }
 

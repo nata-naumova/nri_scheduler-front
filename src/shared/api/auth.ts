@@ -4,12 +4,6 @@ import { ITelegramUser } from '../typings/telegram';
 import { setFromTgAuthorization } from '@/entities/user/avatar/model/avatar.store';
 import { leave } from '@/entities/user/profile/model/profile.store';
 
-const FAKE_USER = {
-  id: 1,
-  email: 'admin@ya.ru',
-  password: 'admin',
-};
-
 export const registration = (nickname: string, email: string, password: string) => {
   return ajax<null>(
     '/api/registration',

@@ -1,73 +1,127 @@
 import { IApiEvent } from '@/entities/event/api/types';
-import { calcMapIconLink } from '@/shared/utils';
-import { DataList, HStack, Image, Link, Text } from '@chakra-ui/react';
-import { EventPlayersList } from './event-player-list';
+import {
+  Button,
+  Field,
+  Fieldset,
+  Group,
+  HStack,
+  Input,
+  InputGroup,
+  Stack,
+  TagsInput,
+} from '@chakra-ui/react';
 import dayjs from 'dayjs';
 
-interface EventCardStatsProps {
+interface EventDetailsFormProps {
   event: IApiEvent;
   tz: string;
 }
 
-export const EventCardStats = ({ event, tz }: EventCardStatsProps) => {
+export type StatItem = {
+  key: string;
+  label: string;
+  render: React.ReactNode;
+};
+
+export const useEventStats = (event: IApiEvent, tz: string): StatItem[] => {
   const eventDate = dayjs(event.date).tz(tz);
 
-  const stats = [
-    { label: 'Мастер игры', value: event.master, href: `/profile/${event.master_id}` },
+  return [
     {
-      label: 'Место проведения',
-      value: event.location,
-      href: `/location/${event.location_id}`,
-      mapLink: event.location_map_link,
-    },
-    { label: 'Дата', value: eventDate.format('DD MMMM') },
-    { label: 'Время', value: eventDate.format('HH:mm') },
-    {
-      label: 'Количество игроков',
-      value: event.max_slots ? `${event.players.length} из ${event.max_slots}` : 'Без ограничений',
+      key: 'master',
+      label: 'Ведущий',
+      render: <Input defaultValue={event.master} />,
     },
     {
-      label: 'Записаны',
-      value: (
-        <EventPlayersList
-          players={event.players.map((p) => ({ userId: p.userId, nickname: p.nickname }))}
-        />
+      key: 'location',
+      label: 'Локация',
+      render: <Input defaultValue={event.location} />,
+    },
+    {
+      key: 'date',
+      label: 'Дата и время',
+      render: (
+        <>
+          <Input defaultValue={eventDate.format('DD MMMM')} />
+          <Input defaultValue={eventDate.format('HH:mm')} />
+        </>
       ),
     },
     {
-      label: 'Продолжительность',
-      value: event.plan_duration ? `${event.plan_duration} ч` : 'Не строим планов',
+      key: '',
+      label: 'Параметры',
+      render: (
+        <HStack alignItems="flex-start" w="full">
+          {event.max_slots ? (
+            <Stack w="full">
+              <Input defaultValue={event.players.length} />
+              <Field.HelperText>Максимальное количество игроков {event.max_slots}</Field.HelperText>
+            </Stack>
+          ) : (
+            'Без ограничений'
+          )}
+          <Stack w="full">
+            <Input defaultValue={event.plan_duration || 'Без ограничений'} />
+            <Field.HelperText>Длительность игры в часах</Field.HelperText>
+          </Stack>
+        </HStack>
+      ),
+    },
+    {
+      key: '',
+      label: 'Игроки',
+      render: (
+        <TagsInput.Root readOnly defaultValue={event.players.map(([, nick]) => nick)}>
+          <TagsInput.Control>
+            <TagsInput.Items />
+
+            <TagsInput.Input placeholder="Read-only..." />
+          </TagsInput.Control>
+
+          <TagsInput.HiddenInput />
+        </TagsInput.Root>
+      ),
     },
   ];
+};
 
+export const EventDetailsForm = ({ event, tz }: EventDetailsFormProps) => {
+  if (!event) return;
+
+  const stats = useEventStats(event, tz);
   return (
-    <DataList.Root orientation="horizontal">
-      {stats.map((item) => {
-        const iconLink = item.mapLink ? calcMapIconLink(item.mapLink) : null;
-        return (
-          <DataList.Item key={item.label}>
-            <DataList.ItemLabel minW="150px">{item.label}</DataList.ItemLabel>
-            <DataList.ItemValue color="black" fontWeight="500">
-              {item.href ? (
-                <HStack>
-                  <Link href={item.href} colorPalette="blue">
-                    {item.value}
-                  </Link>
-                  {iconLink && (
-                    <a target="_blank" href={item.mapLink!} rel="noreferrer">
-                      <Image height="1.75rem" src={iconLink} alt="Показать локацию на карте" />
-                    </a>
-                  )}
-                </HStack>
-              ) : typeof item.value === 'string' ? (
-                <Text>{item.value}</Text>
-              ) : (
-                item.value
-              )}
-            </DataList.ItemValue>
-          </DataList.Item>
-        );
-      })}
-    </DataList.Root>
+    <Fieldset.Root maxW="2xl">
+      <Stack mb={4}>
+        <Fieldset.Legend fontSize="2xl">Детали события #{event.id}</Fieldset.Legend>
+        {/* <Fieldset.HelperText></Fieldset.HelperText> */}
+      </Stack>
+
+      <Fieldset.Content gap={2} css={{ '--field-label-width': '150px' }}>
+        {stats.map((item) => (
+          <Field.Root orientation="horizontal" w="full">
+            <Field.Label>{item.label}</Field.Label>
+            {item.render}
+          </Field.Root>
+        ))}
+      </Fieldset.Content>
+      <Group grow>
+        <Button type="submit" alignSelf="flex-start">
+          Изменить
+        </Button>
+        <Button variant="subtle" colorPalette="blue" onClick={() => console.log('onSubscribe')}>
+          Записаться
+        </Button>
+        <Button
+          onClick={() => console.log('onReopenEvent')}
+          variant="surface"
+          colorPalette="purple"
+        >
+          Переоткрыть
+        </Button>
+        <Button type="button" variant="subtle" colorPalette="red">
+          Отменить
+        </Button>
+      </Group>
+    </Fieldset.Root>
   );
 };

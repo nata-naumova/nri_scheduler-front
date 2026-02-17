@@ -14,7 +14,10 @@ export const mockEvents: IApiEvent[] = [
     date: '2026-02-16T12:00:00+03:00',
     max_slots: 10,
     plan_duration: 3,
-    players: [],
+    players: [
+      ['1', 'Миша'],
+      ['2', 'Таня'],
+    ],
     you_applied: false,
     you_are_master: true,
     cancelled: false,
