@@ -1,7 +1,7 @@
 import { Tabs } from '@chakra-ui/react';
 import { useStore } from '@nanostores/react';
 
-import { $activeTab, setActiveTab } from '@/app/store/tabsStore';
+import { $activeTab, setActiveTab } from '@/shared/store/tabsStore';
 import { PROFILE_TABS } from '../model/profile.data';
 
 type Props = {

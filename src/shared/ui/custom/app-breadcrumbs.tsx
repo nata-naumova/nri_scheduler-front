@@ -7,14 +7,14 @@ export const AppBreadcrumb = () => {
   const segments = location.pathname.split('/').filter(Boolean);
 
   return (
-    <Breadcrumb.Root>
+    <Breadcrumb.Root my={4}>
       <Breadcrumb.List>
         {segments.map((segment, index) => {
           const to = '/' + segments.slice(0, index + 1).join('/');
           const isLast = index === segments.length - 1;
 
           return (
-            <Breadcrumb.Item key={to}>
+            <Breadcrumb.Item key={index}>
               {isLast ? (
                 <Breadcrumb.CurrentLink>{segment}</Breadcrumb.CurrentLink>
               ) : (

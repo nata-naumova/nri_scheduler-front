@@ -1,6 +1,6 @@
 import { NativeSelect } from '@chakra-ui/react';
 
-import { TIMEZONES } from '../../app/store/profile';
+import { TIMEZONES } from '../../shared/store/profile';
 
 interface TimesonesListProps {
   value: number | string | null;

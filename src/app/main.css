@@ -15,5 +15,10 @@ a {
 }
 
 body {
-  /* background-color: #d0d0d0; */
+  background-color: #131313;
+}
+
+.sx-react-calendar-wrapper {
+  height: 500px;
+  max-height: 90vh;
 }

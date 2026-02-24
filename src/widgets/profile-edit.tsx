@@ -19,7 +19,7 @@ import { useStore } from '@nanostores/react';
 import { useEffect, useState } from 'react';
 import { ETzVariant, getMyProfile, readCitiesList, updateMyProfile } from '@/shared/api';
 import { navBack, useAuthVerification } from '@/shared/utils';
-import { $regions } from '@/app/store/regions';
+import { $regions } from '@/shared/store/regions';
 import { toaster } from '@/shared/ui/toaster';
 import { Field } from '@/shared/ui/field';
 import { TimezoneRadioGroup } from '@/shared/ui/radio-group';

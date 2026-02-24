@@ -13,6 +13,7 @@ export const TEST_USER: TStoreProfile = {
   tz_variant: null,
   signed: true,
   verified: true,
+  avatar_url: 'https://i.pinimg.com/1200x/70/0f/57/700f57201ef7a1bfb69c62d57b7f98e9.jpg',
 };
 
 export const TEST_CREDENTIALS: IFormSignin = {

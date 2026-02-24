@@ -1,31 +1,26 @@
-import { UUID } from 'crypto';
-
 export interface IApiEvent {
-  readonly id: UUID;
-  readonly company: string;
-  readonly company_id: UUID;
-  readonly master: string;
-  readonly master_id: UUID;
-  readonly location: string;
-  readonly location_id: UUID;
-  readonly location_map_link: string | null;
-  readonly date: string;
+  readonly id: number;
+  readonly company_id: number;
+  readonly master_id: number;
+  readonly location_id: number;
+  readonly start_date: string;
+  readonly end_date: string;
   readonly max_slots: number | null;
   readonly plan_duration: number | null;
-  readonly players: ReadonlyArray<readonly [userId: string, nickName: string]>;
+  readonly player_ids: number[];
   readonly you_applied: boolean;
   readonly you_are_master: boolean;
-  readonly your_approval: boolean | null;
-  readonly cancelled: boolean;
+  // readonly your_approval: boolean | null;
+  // readonly cancelled: boolean;
 }
 
 export interface IEventsFilter {
-  master?: UUID | null;
-  location?: UUID | null;
+  master?: number | null;
+  location?: number | null;
   region?: string | null;
   city?: string | null;
   applied?: boolean | null;
   not_rejected?: boolean | null;
   imamaster?: boolean | null;
-  company?: UUID[] | null;
+  company?: number[] | null;
 }

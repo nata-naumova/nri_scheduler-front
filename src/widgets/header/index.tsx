@@ -1,15 +1,13 @@
 import { Box, Button, Container, Flex, HStack } from '@chakra-ui/react';
 
 import { Avatar } from '@/shared/ui/avatar';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Logotype } from '@/shared/ui/custom/logotype';
 import { Tooltip } from '@/shared/ui/tooltip';
 import { HeaderMenu } from '@/features/header-menu/ui/header-menu';
 import { useAuth, useUser } from '@/features/auth/model/useAuth';
 
 export const Header = () => {
-  const location = useLocation();
-  const path = location.pathname;
   const navigate = useNavigate();
 
   const { isAuthenticated } = useAuth();
@@ -40,7 +38,7 @@ export const Header = () => {
                       h={11}
                       onClick={() => handleNavigation('/profile')}
                     >
-                      <Avatar src="#" fallback={user?.nickname} />
+                      <Avatar src={user?.avatar_url} fallback={user?.nickname} />
                     </Button>
                   </Tooltip>
 

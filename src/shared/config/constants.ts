@@ -13,3 +13,29 @@ export const URL_ENCODED = true;
 export const enum EVerificationChannel {
   EMAIL = 'email',
 }
+
+export const MENU_HEADER_2 = [
+  {
+    title: 'Событие',
+    href: '/event/1',
+  },
+  {
+    title: 'Кампания',
+    href: '/company/1',
+  },
+  {
+    title: 'Локация',
+    href: '/location/1',
+  },
+  {
+    title: 'Верификация',
+    href: '/verification',
+  },
+];
+
+export const MENU_HEADER = [
+  {
+    title: 'Регионы и города',
+    href: '/#',
+  },
+];

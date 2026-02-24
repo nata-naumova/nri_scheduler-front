@@ -13,7 +13,7 @@ import {
 import dayjs from 'dayjs';
 
 interface EventDetailsFormProps {
-  event: IApiEvent;
+  event: IApiEvent | null;
   tz: string;
 }
 

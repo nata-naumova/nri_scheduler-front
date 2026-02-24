@@ -1,0 +1,124 @@
+{
+  "companies": [
+    { "id": 1, "name": "Мерри Поппинс" },
+    { "id": 2, "name": "Фантазия" }
+  ],
+  "locations": [
+    { "id": 1, "name": "Москва", "timezone": "Europe/Moscow" },
+    { "id": 2, "name": "Санкт-Петербург", "timezone": "Europe/Moscow" }
+  ],
+  "masters": [
+    { "id": 1, "name": "Мастер Игорек", "company_id": 1 },
+    { "id": 2, "name": "Мастер Пётр", "company_id": 2 }
+  ],
+  "players": [
+    { "id": 1, "name": "Миша" },
+    { "id": 2, "name": "Таня" }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "company_id": 1,
+      "master_id": 1,
+      "location_id": 1,
+      "start_date": "2026-02-01T12:00:00+03:00",
+      "end_date": "2026-02-01T15:00:00+03:00",
+      "max_slots": 10,
+      "plan_duration": 3,
+      "player_ids": [1, 2],
+      "you_applied": false,
+      "you_are_master": true
+    },
+    {
+      "id": 2,
+      "company_id": 2,
+      "master_id": 2,
+      "location_id": 2,
+      "start_date": "2026-02-01T18:00:00+03:00",
+      "end_date": "2026-02-01T20:00:00+03:00",
+      "max_slots": 8,
+      "plan_duration": 2,
+      "player_ids": [1],
+      "you_applied": false,
+      "you_are_master": false
+    },
+    {
+      "id": 3,
+      "company_id": 1,
+      "master_id": 1,
+      "location_id": 1,
+      "start_date": "2026-02-02T11:00:00+03:00",
+      "end_date": "2026-02-02T14:00:00+03:00",
+      "max_slots": 10,
+      "plan_duration": 3,
+      "player_ids": [],
+      "you_applied": false,
+      "you_are_master": true
+    },
+    {
+      "id": 4,
+      "company_id": 2,
+      "master_id": 2,
+      "location_id": 2,
+      "start_date": "2026-02-02T15:00:00+03:00",
+      "end_date": "2026-02-02T17:00:00+03:00",
+      "max_slots": 8,
+      "plan_duration": 2,
+      "player_ids": [2],
+      "you_applied": true,
+      "you_are_master": false
+    },
+    {
+      "id": 5,
+      "company_id": 1,
+      "master_id": 1,
+      "location_id": 1,
+      "start_date": "2026-02-03T12:00:00+03:00",
+      "end_date": "2026-02-03T16:00:00+03:00",
+      "max_slots": 10,
+      "plan_duration": 4,
+      "player_ids": [1],
+      "you_applied": false,
+      "you_are_master": true
+    },
+    {
+      "id": 6,
+      "company_id": 2,
+      "master_id": 2,
+      "location_id": 2,
+      "start_date": "2026-02-03T18:00:00+03:00",
+      "end_date": "2026-02-03T20:00:00+03:00",
+      "max_slots": 8,
+      "plan_duration": 2,
+      "player_ids": [2],
+      "you_applied": false,
+      "you_are_master": false
+    },
+    {
+      "id": 7,
+      "company_id": 1,
+      "master_id": 1,
+      "location_id": 1,
+      "start_date": "2026-02-04T10:00:00+03:00",
+      "end_date": "2026-02-04T12:00:00+03:00",
+      "max_slots": 10,
+      "plan_duration": 2,
+      "player_ids": [],
+      "you_applied": false,
+      "you_are_master": true
+    },
+    {
+      "id": 8,
+      "company_id": 2,
+      "master_id": 2,
+      "location_id": 2,
+      "start_date": "2026-02-04T13:00:00+03:00",
+      "end_date": "2026-02-04T15:00:00+03:00",
+      "max_slots": 8,
+      "plan_duration": 2,
+      "player_ids": [1, 2],
+      "you_applied": true,
+      "you_are_master": false
+    }
+  ]
+}

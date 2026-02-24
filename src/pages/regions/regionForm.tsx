@@ -6,8 +6,8 @@ import { TimesonesList } from './timezones';
 import { Field } from '../../shared/ui/field';
 import { toaster } from '../../shared/ui/toaster';
 import { addRegion } from '../../api';
-import { TIMEZONES } from '../../app/store/profile';
-import { loadRegions } from '../../app/store/regions';
+import { TIMEZONES } from '../../shared/store/profile';
+import { loadRegions } from '../../shared/store/regions';
 import { useState } from 'react';
 
 interface IFormAddRegion {

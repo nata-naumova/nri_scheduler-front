@@ -1,5 +1,4 @@
 import { ETzVariant } from '@/shared/api/types';
-import { UUID } from 'crypto';
 
 export interface IStoreProfile {
   readonly id: string;
@@ -13,6 +12,7 @@ export interface IStoreProfile {
   readonly tz_variant: ETzVariant | null;
   readonly signed: boolean;
   readonly verified: boolean;
+  readonly avatar_url: string;
 }
 
 export interface IEmptyStoreProfile {
@@ -27,6 +27,7 @@ export interface IEmptyStoreProfile {
   readonly tz_variant: undefined;
   readonly signed: false;
   readonly verified: undefined;
+  readonly avatar_url: undefined;
 }
 
 export type TStoreProfile = IStoreProfile | IEmptyStoreProfile;

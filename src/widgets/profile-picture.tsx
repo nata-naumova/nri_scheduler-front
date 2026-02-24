@@ -2,7 +2,7 @@ import { Button, HStack, Input, Stack } from '@chakra-ui/react';
 
 import { Avatar } from '../shared/ui/avatar';
 import { toaster } from '../shared/ui/toaster';
-import { $avatarLink } from '../app/store/profile';
+import { $avatarLink } from '../shared/store/profile';
 import { useStore } from '@nanostores/react';
 import { useState } from 'react';
 import { getMyProfile, setAvatar } from '@/shared/api';

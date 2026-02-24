@@ -2,12 +2,12 @@ import { Tabs } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 
-import { $checkboxState, toggleCheckbox } from '@/app/store/checkboxStore';
+import { $checkboxState, toggleCheckbox } from '@/shared/store/checkboxStore';
 import { useEventApplications } from '@/features/event-applications/model/useEventApplications';
 import { EAbortReason } from '@/shared/api/types';
 
 import { PROFILE_TABS } from '@/widgets/profile-tabs/model/profile.data';
-import { EventList } from '@/widgets/eventlist';
+import { EventList } from '@/widgets/event/event-list.ui';
 
 export const EventApplications = () => {
   const [, EVENTS_TAB] = PROFILE_TABS;

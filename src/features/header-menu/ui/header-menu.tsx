@@ -1,3 +1,4 @@
+import { MENU_HEADER, MENU_HEADER_2 } from '@/shared/config/constants';
 import { Avatar } from '@/shared/ui/avatar';
 import { Tooltip } from '@/shared/ui/tooltip';
 import { Box, HStack, IconButton, Menu, Portal, Stack, Text } from '@chakra-ui/react';
@@ -6,42 +7,8 @@ import { Link } from 'react-router-dom';
 
 interface HeaderMenuProps {
   profile: any;
-  isVerified: boolean;
+  isVerified?: boolean;
 }
-
-const PAGES = [
-  {
-    title: 'EventPage',
-    href: '/event/1',
-  },
-  {
-    title: 'CompanyPage',
-    href: '/company/1',
-  },
-  {
-    title: 'LocationPage',
-    href: '/location/1',
-  },
-  {
-    title: 'ShortProfilePage',
-    href: '/profile/1',
-  },
-  {
-    title: 'ProfileEdit',
-    href: '/profile/edit',
-  },
-  {
-    title: 'VerificationPage',
-    href: '/verification',
-  },
-];
-
-const MENU_HEADER = [
-  {
-    title: 'Регионы и города',
-    href: '/#',
-  },
-];
 
 export const HeaderMenu = ({ profile, isVerified }: HeaderMenuProps) => (
   <Menu.Root>
@@ -61,7 +28,7 @@ export const HeaderMenu = ({ profile, isVerified }: HeaderMenuProps) => (
             <Menu.ItemGroupLabel fontSize={12}>Сейчас</Menu.ItemGroupLabel>
             <Menu.Item value={profile.nickname}>
               <HStack>
-                <Avatar src={profile?.link} fallback={profile?.nickname} />
+                <Avatar src={profile?.avatar_url} fallback={profile?.nickname} />
                 <Stack gap={1}>
                   <Text fontWeight="bold">{profile.nickname}</Text>
                   <Text color="gray.600">{profile.email}</Text>
@@ -81,7 +48,7 @@ export const HeaderMenu = ({ profile, isVerified }: HeaderMenuProps) => (
           <Menu.Separator />
           <Menu.ItemGroup>
             <Menu.ItemGroupLabel fontSize={12}>Страницы</Menu.ItemGroupLabel>
-            {PAGES.map((link) => (
+            {MENU_HEADER_2.map((link) => (
               <Menu.Item key={link.href} asChild value={link.title} cursor="pointer">
                 <Link to={link.href}>{link.title}</Link>
               </Menu.Item>

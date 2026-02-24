@@ -9,13 +9,13 @@ import SingUpPage from '@/pages/sign-up/ui/sign-up-page';
 // import { HomePage } from '@/pages/home';
 import { SignInPage } from '@/pages/sign-in/ui/sing-in-page';
 import { EventPage } from '@/pages/event';
-import { LocationPage } from '@/pages/location/ui/location';
+import { LocationPage } from '@/pages/location/location-page.ui';
 import { NotFoundPage } from '@/pages/not-found/ui/not-found';
-import { CompanyPage } from '@/pages/company/ui/company-page';
+import { CompanyPage } from '@/pages/company/company-page.ui';
 import { ProfilePage } from '@/pages/profile';
-import CalendarPage from '@/pages/calendar/ui/calendar';
-import VerificationPage from '@/pages/verification/verification';
+import VerificationPage from '@/pages/verification/verification-page';
 import { RoutePaths } from '@/shared/config/routes';
+import { CalendarPage } from '@/pages/calendar/calendar-page.ui';
 
 function AppRouter() {
   return (

@@ -1,7 +1,7 @@
 import { UUID } from 'crypto';
 
 export interface IApiLocation {
-  readonly id: UUID;
+  readonly id: string;
   readonly name: string;
   readonly address: string | null;
   readonly description: string | null;
