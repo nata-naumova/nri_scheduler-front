@@ -13,7 +13,7 @@ import { TimesonesList } from './timezones';
 import { Field } from '../../shared/ui/field';
 import { toaster } from '../../shared/ui/toaster';
 import { addCity } from '../../api';
-import { TIMEZONES } from '../../app/store/profile';
+import { TIMEZONES } from '../../shared/store/profile';
 import { useState } from 'react';
 
 interface IRegionOption {

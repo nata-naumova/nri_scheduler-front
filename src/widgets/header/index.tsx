@@ -1,28 +1,17 @@
-import { useState } from 'react';
-import { Box, Button, Container, Flex, HStack, Link, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Container, Flex, HStack } from '@chakra-ui/react';
 
-import { useStore } from '@nanostores/react';
-import { useAuthVerification } from '@/shared/utils';
-import { $avatarLink } from '@/app/store/profile';
-import { logout } from '@/shared/api';
-import { Popover } from '@/shared/ui/popover';
 import { Avatar } from '@/shared/ui/avatar';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Logotype } from '@/shared/ui/custom/logotype';
+import { Tooltip } from '@/shared/ui/tooltip';
+import { HeaderMenu } from '@/features/header-menu/ui/header-menu';
+import { useAuth, useUser } from '@/features/auth/model/useAuth';
 
 export const Header = () => {
-  const location = useLocation();
-  const path = location.pathname;
   const navigate = useNavigate();
 
-  const [open, setOpen] = useState(false);
-  const { profile, isAuthenticated, isVerified } = useAuthVerification();
-  const avatarLink = useStore($avatarLink);
-
-  const handleLogout = () => {
-    logout();
-    setOpen(false);
-    navigate('/sign-in');
-  };
+  const { isAuthenticated } = useAuth();
+  const { user } = useUser();
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -30,54 +19,33 @@ export const Header = () => {
 
   return (
     <header>
-      <Box borderBottomWidth={1} mb={6}>
+      <Box borderBottomWidth={1} mb={4}>
         <Container>
-          <Flex gap={4} align="center" justify="space-between" py="6">
-            <Link variant="plain" href="/calendar" fontWeight={600} fontSize={24} minHeight="44px">
-              НРИ Календарь
-            </Link>
-            {!isAuthenticated ? (
-              <Popover
-                open={open}
-                onOpenChange={(e) => setOpen(e.open)}
-                positioning={{ placement: 'bottom-end' }}
-                content={
-                  <Stack>
-                    <Button variant="ghost" onClick={() => handleNavigation('/profile')}>
-                      Профиль
-                    </Button>
+          <Flex gap={4} align="center" justify="space-between" py="4">
+            <Logotype href="/" />
+
+            <HStack gap={6}>
+              {isAuthenticated ? (
+                <Button variant="surface" onClick={() => navigate('/sign-in')}>
+                  Авторизация
+                </Button>
+              ) : (
+                <HStack>
+                  <Tooltip content="Профиль">
                     <Button
                       variant="ghost"
-                      onClick={() => isVerified && handleNavigation('/regions')}
-                      disabled={!isVerified}
-                      cursor={isVerified ? 'pointer' : 'not-allowed'}
+                      w={11}
+                      h={11}
+                      onClick={() => handleNavigation('/profile')}
                     >
-                      {isVerified ? 'Регионы и города' : 'Регионы и города (подтвердите эл. почту)'}
+                      <Avatar src={user?.avatar_url} fallback={user?.nickname} />
                     </Button>
-                    <Button variant="ghost" colorPalette="red" onClick={handleLogout}>
-                      Выйти
-                    </Button>
-                  </Stack>
-                }
-              >
-                <HStack key={profile?.email} gap="4">
-                  <Avatar src={avatarLink?.link} fallback={profile?.nickname} />
-                  <Stack gap="0">
-                    <Text fontWeight="medium">{profile?.nickname}</Text>
-                    <Text color="fg.muted" textStyle="sm">
-                      {profile?.email}
-                    </Text>
-                  </Stack>
+                  </Tooltip>
+
+                  <HeaderMenu profile={user} isVerified={true} />
                 </HStack>
-              </Popover>
-            ) : (
-              path !== '/sign-in' &&
-              path !== '/sign-up' && (
-                <Button type="button" h="44px" ml="auto" onClick={() => navigate('/sign-in')}>
-                  Вход и регистрация
-                </Button>
-              )
-            )}
+              )}
+            </HStack>
           </Flex>
         </Container>
       </Box>

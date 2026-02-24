@@ -5,46 +5,42 @@ import { PublicOnlyLayout } from './public-only-layout';
 import { ProtectedLayout } from './protected-layout';
 import { Layout } from './layout';
 
-import { EventPage } from '@/pages/event/ui/event';
-import { CompanyPage } from '@/pages/company/company';
-import { SignInPage } from '@/pages/sign-in/sing-in';
-import { LocationPage } from '@/pages/location/location';
-import { NotFoundPage } from '@/pages/not-found/not-found';
-import { HomePage } from '@/pages/home';
-
-const SingUpPage = lazy(() => import('@/pages/sign-up/signup'));
-const CalendarPage = lazy(() => import('@/pages/calendar/ui/calendar'));
-const ProfilePage = lazy(() => import('@/pages/profile/profile'));
-const ShortProfilePage = lazy(() => import('@/pages/profile/short-profile'));
-const ProfileEdit = lazy(() => import('@/pages/profile/profile-edit'));
-const VerificationPage = lazy(() => import('@/pages/verification/verification'));
-// const RegionsPage = lazy(() => import('@/components/pages/regions/regions'));
+import SingUpPage from '@/pages/sign-up/ui/sign-up-page';
+// import { HomePage } from '@/pages/home';
+import { SignInPage } from '@/pages/sign-in/ui/sing-in-page';
+import { EventPage } from '@/pages/event';
+import { LocationPage } from '@/pages/location/location-page.ui';
+import { NotFoundPage } from '@/pages/not-found/ui/not-found';
+import { CompanyPage } from '@/pages/company/company-page.ui';
+import { ProfilePage } from '@/pages/profile';
+import VerificationPage from '@/pages/verification/verification-page';
+import { RoutePaths } from '@/shared/config/routes';
+import { CalendarPage } from '@/pages/calendar/calendar-page.ui';
 
 function AppRouter() {
   return (
     <Suspense fallback={<div>Загрузка...</div>}>
       <Routes>
+        <Route element={<PublicOnlyLayout />}>
+          <Route path={RoutePaths.SIGN_IN} element={<SignInPage />} />
+          <Route path={RoutePaths.SIGN_UP} element={<SingUpPage />} />
+        </Route>
         <Route element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-
-          <Route element={<PublicOnlyLayout />}>
-            <Route path="/sign-in" element={<SignInPage />} />
-            <Route path="/sign-up" element={<SingUpPage />} />
-          </Route>
+          {/* <Route path="/" element={<HomePage />} /> */}
+          <Route path={RoutePaths.HOME} element={<CalendarPage />} />
 
           <Route element={<ProtectedLayout />}>
-            <Route path="/event/:id" element={<EventPage />} />
-            <Route path="/company/:id" element={<CompanyPage />} />
-            <Route path="/location/:id" element={<LocationPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profile/:id" element={<ShortProfilePage />} />
-            <Route path="/profile/edit" element={<ProfileEdit />} />
-            <Route path="/verification" element={<VerificationPage />} />
-            {/* <Route path="/regions" element={<RegionsPage />} /> */}
+            <Route path={RoutePaths.EVENT_DETAILS} element={<EventPage />} />
+            <Route path={RoutePaths.COMPANY_DETAILS} element={<CompanyPage />} />
+            <Route path={RoutePaths.LOCATION_DETAILS} element={<LocationPage />} />
+            <Route path={RoutePaths.PROFILE} element={<ProfilePage />} />
+            <Route path={RoutePaths.VERIFICATION} element={<VerificationPage />} />
+            {/* <Route path="/profile/:id" element={<ShortProfilePage />} /> */}
+            {/* <Route path={RoutePaths.PROFILE_EDIT} element={<ProfileEdit />} /> */}
+            {/* <Route path={RoutePaths.REGIONS} element={<RegionsPage />} /> */}
           </Route>
 
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path={RoutePaths.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
       </Routes>
     </Suspense>

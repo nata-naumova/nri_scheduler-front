@@ -1,29 +1,85 @@
-import { mockEvents, mockBgEvents } from '../model/mock-events';
+import { IApiEvent } from '@/entities/event/api/types';
 import { Temporal } from '@js-temporal/polyfill';
+import { useEffect, useState } from 'react';
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+const API_URL = 'http://localhost:3000';
 
-export const calendarApi = {
-  getEvents: async (start?: Temporal.ZonedDateTime, end?: Temporal.ZonedDateTime) => {
-    await delay(300); // имитация сетевого запроса
-    if (start && end) {
-      return mockEvents.filter(
-        (e) =>
-          Temporal.ZonedDateTime.compare(e.start, end) <= 0 &&
-          Temporal.ZonedDateTime.compare(e.end, start) >= 0,
-      );
-    }
-    return mockEvents;
-  },
+export const useEvents = () => {
+  const [events, setEvents] = useState<IApiEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-  getBackgroundEvents: async () => {
-    await delay(300);
-    return mockBgEvents;
-  },
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(`${API_URL}/events`);
+        if (!response.ok) {
+          throw new Error(`Ошибка ${response.status}`);
+        }
+        const data = await response.json();
+        setEvents(data);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  addEvent: async (event: (typeof mockEvents)[0]) => {
-    await delay(200);
-    mockEvents.push(event);
-    return event;
-  },
+    fetchEvents();
+  }, []);
+
+  return { events, loading, error };
+};
+export const useCompanies = () => {
+  const [companies, setCompanies] = useState<{ id: number; name: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const response = await fetch(`${API_URL}/companies`);
+        if (!response.ok) {
+          throw new Error(`Ошибка ${response.status}`);
+        }
+        const data = await response.json();
+        setCompanies(data);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCompanies();
+  }, []);
+
+  return { companies, loading, error };
+};
+
+export const useMasters = () => {
+  const [masters, setMasters] = useState<{ id: number; name: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const fetchMasters = async () => {
+      try {
+        const response = await fetch(`${API_URL}/masters`);
+        if (!response.ok) {
+          throw new Error(`Ошибка ${response.status}`);
+        }
+        const data = await response.json();
+        setMasters(data);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMasters();
+  }, []);
+
+  return { masters, loading, error };
 };
